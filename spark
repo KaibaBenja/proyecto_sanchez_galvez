@@ -29,9 +29,6 @@ if (str_starts_with(PHP_SAPI, 'cgi')) {
     exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
-cp vendor/codeigniter4/framework/public/index.php public/index.php
-cp vendor/codeigniter4/framework/spark spark
-
 /*
  *---------------------------------------------------------------
  * CHECK PHP VERSION
