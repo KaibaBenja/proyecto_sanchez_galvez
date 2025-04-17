@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="<?= base_url('assets/img/logo.png') ?>" alt="SneakerZone Logo" class="logo">
+            <img src="assets/img/logo.png" alt="SneakerZone Logo" class="logo" width= 50px>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>

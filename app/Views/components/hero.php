@@ -7,7 +7,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="<?= base_url('assets/img/adidas-hero.png') ?>" class="d-block" style=" object-fit: contain;width: 100%;" alt="Nueva colección">
+                <img src="assets/img/adidas-hero.png" class="d-block" style=" object-fit: contain;width: 100%;" alt="Nueva colección">
                 <div class="carousel-caption">
                     <h1>Nueva Colección 2023</h1>
                     <p>Descubre las últimas tendencias en sneakers</p>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="<?= base_url('assets/img/nike-hero.png') ?>" class="d-block w-100" alt="Edición limitada">
+                <img src="assets/img/nike-hero.png" class="d-block w-100" alt="Edición limitada">
                 <div class="carousel-caption">
                     <h1>Edición Limitada</h1>
                     <p>Zapatillas exclusivas para los verdaderos coleccionistas</p>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="<?= base_url('assets/img/puma-hero.png') ?>" class="d-block w-100" alt="Ofertas especiales">
+                <img src="assets/img/puma-hero.png" class="d-block w-100" alt="Ofertas especiales">
                 <div class="carousel-caption">
                     <h1>Ofertas Especiales</h1>
                     <p>Hasta 50% de descuento en modelos seleccionados</p>

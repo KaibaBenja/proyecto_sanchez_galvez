@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="payment-methods text-center py-4 mt-4 border-top">
-                <img src="<?php echo base_url('assets/img/payment-methods.png') ?>" style="width: 50%;" alt="Métodos de pago" class="img-fluid">
+                <img src="assets/img/payment-methods.png" style="width: 50%;" alt="Métodos de pago" class="img-fluid">
             </div>
         </div>
         <div class="copyright py-3 bg-dark text-white text-center">

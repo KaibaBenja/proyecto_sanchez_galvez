@@ -177,22 +177,22 @@ Home
         </div>
         <div class="row align-items-center">
             <div class="col-md-2 col-6 text-center mb-4">
-                <img src="<?= base_url('assets/img/nike-logo.png') ?>" alt="Nike" class="img-fluid">
+                <img src="assets/img/nike-logo.png" alt="Nike" class="img-fluid">
             </div>
             <div class="col-md-2 col-6 text-center mb-4">
-                <img src="<?= base_url('assets/img/adidas-logo.png') ?>" alt="Adidas" class="img-fluid">
+                <img src="assets/img/adidas-logo.png" alt="Adidas" class="img-fluid">
             </div>
             <div class="col-md-2 col-6 text-center mb-4">
-                <img src="<?= base_url('assets/img/puma-logo.png') ?>" alt="Puma" class="img-fluid">
+                <img src="assets/img/puma-logo.png" alt="Puma" class="img-fluid">
             </div>
             <div class="col-md-2 col-6 text-center mb-4">
-                <img src="<?= base_url('assets/img/reebok-logo.png') ?>" alt="Reebok" class="img-fluid">
+                <img src="assets/img/reebok-logo.png" alt="Reebok" class="img-fluid">
             </div>
             <div class="col-md-2 col-6 text-center mb-4">
-                <img src="<?= base_url('assets/img/newbalance-logo.png') ?>" alt="New Balance" class="img-fluid">
+                <img src="assets/img/newbalance-logo.png" alt="New Balance" class="img-fluid">
             </div>
             <div class="col-md-2 col-6 text-center mb-4">
-                <img src="<?= base_url('assets/img/converse-logo.png') ?>" alt="Converse" class="img-fluid">
+                <img src="assets/img/converse-logo.png" alt="Converse" class="img-fluid">
             </div>
         </div>
     </div>
