@@ -16,9 +16,21 @@ Home
         </figure>
         <nav>
             <ul>
-                <li><a href="http://" target="_blank" rel="noopener noreferrer">Home</a></li>
-                <li><a href="http://" target="_blank" rel="noopener noreferrer">¿Quienes somos?</a></li>
-                <li><a href="http://" target="_blank" rel="noopener noreferrer">Contacto</a></li>
+                <li><a href="http://" target="_blank">Home</a></li>
+                <li><a href="http://" target="_blank">¿Quienes somos?</a></li>
+                <li><a href="http://" target="_blank">Contacto</a></li>
+                <li><a href="http://" target="_blank">Comercialización</a></li>
+                <li><a href="http://" target="_blank">Términos y Usos</a></li>
+            </ul>
+            <button id="menuToggle" class="menuToggle">
+                <img src="assets/img/menu.png" alt="menu">
+            </button>
+            <ul id="menu" class="menu">
+                <li><a href="http://" target="_blank">Home</a></li>
+                <li><a href="http://" target="_blank">¿Quienes somos?</a></li>
+                <li><a href="http://" target="_blank">Contacto</a></li>
+                <li><a href="http://" target="_blank">Comercialización</a></li>
+                <li><a href="http://" target="_blank">Términos y Usos</a></li>
             </ul>
         </nav>
     </header>
@@ -30,7 +42,7 @@ Home
                 </figure>
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
-                    <h2>JORDAN 1 CHICAGO</h2>
+                    <h2>JORDAN 1</h2>
                     <p class="description">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
                     </p>
