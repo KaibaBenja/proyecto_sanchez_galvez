@@ -1,12 +1,14 @@
 <?= $this->section('title') ?>
 Home
 <?= $this->endSection() ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/sneaker-style.css">
     <title><?= $this->renderSection('title') ?></title>
 </head>
+
 <body>
     <header>
         <figure class="logo">
@@ -14,9 +16,9 @@ Home
         </figure>
         <nav>
             <ul>
-                <li>Home</li>
-                <li>Info</li>
-                <li>Login</li>
+                <li><a href="http://" target="_blank" rel="noopener noreferrer">Home</a></li>
+                <li><a href="http://" target="_blank" rel="noopener noreferrer">¿Quienes somos?</a></li>
+                <li><a href="http://" target="_blank" rel="noopener noreferrer">Contacto</a></li>
             </ul>
         </nav>
     </header>
@@ -28,7 +30,7 @@ Home
                 </figure>
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
-                    <h2>NIKE JORDAN 1 CHICAGO</h2>
+                    <h2>JORDAN 1 CHICAGO</h2>
                     <p class="description">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
                     </p>
@@ -44,7 +46,7 @@ Home
                 </figure>
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
-                    <h2>NIKE JORDAN 11</h2>
+                    <h2>JORDAN 11</h2>
                     <p class="description">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
                     </p>
@@ -60,7 +62,7 @@ Home
                 </figure>
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
-                    <h2>NIKE JORDAN 4</h2>
+                    <h2>JORDAN 4</h2>
                     <p class="description">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
                     </p>
@@ -85,5 +87,5 @@ Home
         </div>
     </section>
 
-    <script src="assets/css/sneaker.js"></script>
+    <script src="assets/js/sneaker.js"></script>
 </body>
