@@ -38,7 +38,7 @@ body {
     }
   }
   & .carousel {
-    background-image: radial-gradient(#2b2e4f, #111126);
+    background-image: radial-gradient(#fff8, #fff);
     height: 100vh;
     overflow: hidden;
     position: relative;
@@ -87,7 +87,7 @@ body {
           }
           & h2 {
             font-family: "League Gothic", sans-serif;
-            font-size: 11em;
+            font-size: 6em;
             line-height: 1em;
           }
           & .description {
@@ -171,7 +171,7 @@ body {
     }
     & .indicators {
       position: absolute;
-      top: 52%;
+      top: 55%;
       height: var(--w-column);
       width: min(1200px, 90vw);
       left: 50%;
@@ -196,7 +196,7 @@ body {
           pointer-events: auto;
           cursor: pointer;
           transition: 0.5s;
-          & .active {
+          &.active {
             background-color: yellow;
           }
         }
@@ -253,6 +253,70 @@ body {
                 transform: translateX(0);
                 opacity: 1;
             }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive */
+/* Tablet */
+
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+  :root{
+    --w-column: 100px;
+  }
+  body{
+    & .carousel{
+      & .list{
+        & .item{
+          & .content{
+            & h2{
+              font-size:3em;
+            }
+          }
+        }
+        & .indicators{
+          top: 60%;
+          & .number{
+            font-size: 10em;
+            transform: translate(50px);
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  :root{
+    --w-column: 50px;
+  }
+  body{
+    & .carousel{
+      & .list{
+        & .item{
+          & .content{
+            justify-content: end;
+            padding-bottom: 100px;
+            & h2{
+              font-size: 2em;
+            }
+            & figure{
+              width: 100%;
+              transform: translateY(0);
+              top: 200px;
+              left: -30px;
+            }
+          }
+        }
+        & .indicators{
+          top: 60%;
+          & .number{
+            font-size: 10em;
+            transform: translate(50px);
+            opacity: 0.5;
+          }
         }
       }
     }
