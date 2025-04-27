@@ -1,0 +1,34 @@
+.terminos {
+    background-image: radial-gradient(#fff8, #fff);
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.terminos-container {
+    width: min(1000px, 90vw);
+    color: #232442;
+}
+
+.terminos-container h1 {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 5em;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.terminos-container h2 {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 2.5em;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    color: #232442;
+}
+
+.terminos-container p {
+    font-family: Karla, sans-serif;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    line-height: 1.7;
+    color: #333;
+}

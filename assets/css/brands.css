@@ -1,0 +1,37 @@
+.brands {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: rgb(81, 72, 85);
+  background-image: radial-gradient(#fff8, #fff);
+}
+
+.brands__title {
+  font-family: "Karla", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.brands__container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.brands__item {
+  flex: 1 1 120px; /* se adapta */
+  max-width: 150px;
+}
+
+.brands__item img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.brands__item img:hover {
+  transform: scale(1.1);
+}
