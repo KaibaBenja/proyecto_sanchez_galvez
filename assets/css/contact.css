@@ -1,0 +1,105 @@
+.contacto {
+  background-image: radial-gradient(#fff8, #fff);
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contacto-container {
+  width: min(1200px, 90vw);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.contacto-text {
+  flex: 1;
+  color: #232442;
+}
+
+.contacto-text h1 {
+  font-family: "League Gothic", sans-serif;
+  font-size: 5em;
+  margin-bottom: 20px;
+}
+
+.contacto-text h2 {
+  font-family: "League Gothic", sans-serif;
+  font-size: 2.5em;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.contacto-text ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.contacto-text ul li {
+  font-family: Karla, sans-serif;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.contacto-text ul ul {
+  padding-left: 20px;
+}
+
+.contacto-form {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contacto-form h2 {
+  font-family: "League Gothic", sans-serif;
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #232442;
+  text-align: center;
+}
+
+.formulario .form-group {
+  margin-bottom: 20px;
+}
+
+.formulario label {
+  display: block;
+  font-family: Karla, sans-serif;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.formulario input,
+.formulario textarea {
+  width: 100%;
+  padding: 10px;
+  font-family: Karla, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+.btn-enviar {
+  display: block;
+  width: 100%;
+  background: #232442;
+  color: #fff;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-family: "League Gothic", sans-serif;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-enviar:hover {
+  background: #3b3f6b;
+}

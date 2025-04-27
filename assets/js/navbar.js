@@ -1,8 +1,11 @@
-// Function to toggle the menu
-function toggleMenu() {
-    const menu = document.getElementById('menu');
-    menu.classList.toggle('open');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('header');
 
-// Add event listener to the toggle button
-document.getElementById('menuToggle').addEventListener('click', toggleMenu);
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+});
