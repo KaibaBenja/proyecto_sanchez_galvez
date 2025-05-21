@@ -215,7 +215,6 @@ body {
   }
 }
 
-/* Animaciones */
 
 body {
   & .carousel {
@@ -275,8 +274,6 @@ body {
   }
 }
 
-/* Responsive */
-/* Tablet */
 
 @media screen and (max-width: 1023px) and (min-width: 768px) {
   :root {
@@ -412,7 +409,6 @@ body {
   }
 }
 
-/* Footer */
 .footer {
   color: #000;
   background-color: transparent;
@@ -432,18 +428,18 @@ a{
 
 .offcanvas {
   background-color: white;
-  height: 100vh; /* Fondo principal */
+  height: 100vh;
 }
 
 .offcanvas-header {
-  border-bottom: 1px solid #ddd; /* Línea separadora arriba */
+  border-bottom: 1px solid #ddd; 
 }
 
 .offcanvas-body {
-  background-color: white; /* Mismo color de fondo */
-  padding: 1.5rem; /* Espacio interno */
+  background-color: white; 
+  padding: 1.5rem; 
   color: black;
-  height: 100vh; /* Texto negro para mejor visibilidad */
+  height: 100vh; 
 }
 
 body header.scrolled {
