@@ -73,11 +73,7 @@
     <h1>400</h1>
 
     <p>
-        <?php if (ENVIRONMENT !== 'production') : ?>
-            <?= nl2br(esc($message)) ?>
-        <?php else : ?>
-            <?= lang('Errors.sorryBadRequest') ?>
-        <?php endif; ?>
+        Estamos trabajando para resolver el problema.
     </p>
 </div>
 </body>
