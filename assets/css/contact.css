@@ -103,3 +103,22 @@
 .btn-enviar:hover {
   background: #3b3f6b;
 }
+
+.btn-limpiar {
+  display: block;
+  width: 100%;
+  background: #232442;
+  color: #fff;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-family: "League Gothic", sans-serif;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 5px;
+}
+
+.btn-limpiar:hover {
+  background: #3b3f6b;
+}

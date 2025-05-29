@@ -17,19 +17,19 @@
                     <ul class="footer-links">
                         <li><a href="<?= base_url() ?>  ">Inicio</a></li>
                         <li><a href="<?= site_url('about') ?>">Sobre Nosotros</a></li>
-                        <li><a href="<?= site_url('products') ?>">Productos</a></li>
-                        <li><a href="<?= site_url('offers') ?>">Ofertas</a></li>
+                        <li><a href="<?= site_url() ?>">Productos</a></li>
+                        <li><a href="<?= site_url() ?>">Ofertas</a></li>
                         <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="mb-4">Ayuda & Soporte</h5>
                     <ul class="footer-links">
-                        <li><a href="<?= site_url('faq') ?>">FAQ</a></li>
-                        <li><a href="<?= site_url('shipping') ?>">Envíos y Entregas</a></li>
-                        <li><a href="<?= site_url('returns') ?>">Devoluciones</a></li>
-                        <li><a href="<?= site_url('payment') ?>">Métodos de Pago</a></li>
-                        <li><a href="<?= site_url('privacy') ?>">Política de Privacidad</a></li>
+                        <li><a href="<?= site_url() ?>">FAQ</a></li>
+                        <li><a href="<?= site_url('commercial') ?>">Envíos y Entregas</a></li>
+                        <li><a href="<?= site_url() ?>">Devoluciones</a></li>
+                        <li><a href="<?= site_url() ?>">Métodos de Pago</a></li>
+                        <li><a href="<?= site_url('terms') ?>">Política de Privacidad</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
