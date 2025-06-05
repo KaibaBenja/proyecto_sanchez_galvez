@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="assets/css/contact.css">
     <link rel="stylesheet" href="assets/css/terms.css">
     <link rel="stylesheet" href="assets/css/brands.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
     <title><?= $this->renderSection('title') ?></title>
 </head>
 
@@ -26,9 +27,11 @@
     <?= $this->include('components/brands') ?>
     <?= $this->include('layout/footer') ?>
 
-<script src="assets/js/sneaker.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/navbar.js"></script>
+    <script src="assets/js/sneaker.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/auth.js"></script>
+
 </body>
 
 </html>

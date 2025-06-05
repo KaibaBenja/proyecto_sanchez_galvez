@@ -1,14 +1,17 @@
 <header class="header">
-    <figure class="logo">
-        <img src="assets/img/logo.png" alt="Logo" class="logo__image">
-    </figure>
+    <a href="<?= site_url() ?>">
+        <figure class="logo">
+            <img src="assets/img/logo.png" alt="Logo" class="logo__image">
+        </figure>
+    </a>
     <nav class="navMobile">
         <ul class="navMobile__menu">
-        <li><a href="<?= base_url() ?>">Home</a></li>
-        <li><a href="<?= site_url('about') ?>">¿Quienes somos?</a></li>
-        <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
-        <li><a href="<?= site_url('commercial') ?>">Comercialización</a></li>
-        <li><a href="<?= site_url('terms') ?>">Términos y Usos</a></li>
+            <li><a href="<?= base_url() ?>">Home</a></li>
+            <li><a href="<?= site_url('about') ?>">¿Quienes somos?</a></li>
+            <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
+            <li><a href="<?= site_url('commercial') ?>">Comercialización</a></li>
+            <li><a href="<?= site_url('terms') ?>">Términos y Usos</a></li>
+            <li><a href="<?= site_url('terms') ?>">Iniciar Sesión</a></li>
         </ul>
         <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img src="assets/img/menu.png" alt="menu"></button>
 
@@ -26,6 +29,7 @@
                 <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
                 <li><a href="<?= site_url('commercial') ?>">Comercialización</a></li>
                 <li><a href="<?= site_url('terms') ?>">Términos y Usos</a></li>
+                <li><a href="<?= site_url('terms') ?>">Iniciar Sesión</a></li>
             </ul>
         </div>
     </div>
