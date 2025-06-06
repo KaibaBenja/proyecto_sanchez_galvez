@@ -21,7 +21,7 @@ Iniciar Sesion
                     <p>Ingresa tus credenciales para acceder a tu cuenta</p>
                 </div>
 
-                <form action="<?php echo base_url('login_action'); ?>" method="POST" class="auth-form">
+                <form action="<?php echo site_url('/auth/login_action'); ?>" method="POST" class="auth-form">
                     <div class="input-group">
                         <label for="loginEmail">Correo electrónico</label>
                         <div class="input-wrapper">
@@ -57,7 +57,7 @@ Iniciar Sesion
                     <p>Ingresa tus datos para registrarte</p>
                 </div>
 
-                <form action="<?php echo base_url('register-action'); ?>" method="POST" class="auth-form">
+                <form action="<?php echo base_url('auth/register-action'); ?>" method="POST" class="auth-form">
                     <div class="input-group">
                         <label for="registerName">Nombre completo</label>
                         <div class="input-wrapper">

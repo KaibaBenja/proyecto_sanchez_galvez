@@ -42,6 +42,7 @@ function togglePassword(inputId) {
 // Form validation for register
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.querySelector('#registerForm form');
+    const submitButtons = document.querySelectorAll('.auth-form .submit-btn');
     
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
@@ -64,15 +65,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Add loading state to submit buttons
-document.querySelectorAll('.submit-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const originalText = this.textContent;
-        this.textContent = 'Procesando...';
-        this.disabled = true;
+document.addEventListener('DOMContentLoaded', function () {
+    const submitButtons = document.querySelectorAll('.auth-form .submit-btn');
+
+    submitButtons.forEach(button => {
+        const form = button.closest('form');
         
-        setTimeout(() => {
-            this.textContent = originalText;
-            this.disabled = false;
-        }, 3000);
+        form.addEventListener('submit', function () {
+            button.textContent = 'Procesando...';
+            button.disabled = true;
+        });
     });
 });

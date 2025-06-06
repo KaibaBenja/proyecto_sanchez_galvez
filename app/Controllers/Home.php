@@ -20,8 +20,11 @@ class Home extends BaseController
         return view('/front/about');
     }
 
-    public function terms(): string
+    public function terms()
     {
+        if(!session()->get('logged_in')){
+            return redirect()->to('/login');
+        }
         return view('/front/terms');
     }
 
