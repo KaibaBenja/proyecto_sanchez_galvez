@@ -16,7 +16,7 @@ $routes->get('/register', 'Auth::showRegister');
 $routes->post('/register', 'Auth::register');
 $routes->get('/logout', 'Auth::logout');
 $routes->get('/products',            'Products::index');
-$routes->get('/products/create',     'Products::create');
+$routes->get('/products/create',     'Products::createProducts');
 $routes->post('/products/store',     'Products::store');
 $routes->get('/products/edit/(:num)',   'Products::edit/$1');
 $routes->post('/products/update/(:num)', 'Products::update/$1');

@@ -26,187 +26,85 @@ class Products extends BaseController
         $this->productSizeModel  = new ProductSizeModel();
     }
 
+    public function createProducts(){
+        return view('products/create');
+    }
+
     private function authorize()
     {
         $role = session()->get('user_role');
         return in_array($role, ['admin', 'vendedor']);
     }
 
-    public function index()
-    {
-        // Mismo que antes, con filtros por brand/category/size
-        $brandId    = $this->request->getGet('brand_id');
-        $categoryId = $this->request->getGet('category_id');
-        $sizeId     = $this->request->getGet('size_id');
-
-        $query = $this->productModel
-            ->select('products.*, brands.name as brand_name, categories.name as category_name')
-            ->join('brands', 'brands.id = products.brand_id')
-            ->join('categories', 'categories.id = products.category_id');
-
-        if ($brandId)    $query->where('products.brand_id', $brandId);
-        if ($categoryId) $query->where('products.category_id', $categoryId);
-        if ($sizeId) {
-            $query->join('product_sizes', 'product_sizes.product_id = products.id')
-                  ->where('product_sizes.size_id', $sizeId);
-        }
-
-        $data['products']   = $query->findAll();
-        $data['brands']     = $this->brandModel->findAll();
-        $data['categories'] = $this->categoryModel->findAll();
-        $data['sizes']      = $this->sizeModel->findAll();
-
-        return view('products/index', $data);
-    }
-
-    public function create()
-    {
-        if (! $this->authorize()) {
-            return redirect()->to('/login');
-        }
-
-        $data['brands']     = $this->brandModel->findAll();
-        $data['categories'] = $this->categoryModel->findAll();
-        $data['sizes']      = $this->sizeModel->findAll();
-
-        return view('products/create', $data);
-    }
-
     public function store()
-    {
-        if (! $this->authorize()) {
+{
+    if (! $this->authorize()) {
             return redirect()->to('/login');
         }
 
-        // 1) Procesar subida de imagen:
-        $image = $this->request->getFile('image');
-        if ($image && $image->isValid() && ! $image->hasMoved()) {
-            $newName = $image->getRandomName();
-            // Mueve la imagen a public/uploads
-            $image->move(WRITEPATH . '../public/uploads', $newName);
-            $imagePath = '/uploads/' . $newName;
+    $productModel = new \App\Models\ProductModel();
+    $brandModel = new \App\Models\BrandModel();
+    $categoryModel = new \App\Models\CategoryModel();
+    $sizeModel = new \App\Models\SizeModel();
+    $productSizeModel = new \App\Models\ProductSizeModel();
+
+    $brandInput = $this->request->getPost('brand');
+    $categoryInput = $this->request->getPost('category');
+    $sizesInput = $this->request->getPost('sizes'); 
+
+    if (is_numeric($brandInput)) {
+        $brandId = $brandInput;
+    } else {
+        $brand = $brandModel->where('name', $brandInput)->first();
+        if (!$brand) {
+            $brandId = $brandModel->insert(['name' => $brandInput], true);
         } else {
-            // Si no subió imagen o hubo error, se puede setear valor vacío.
-            $imagePath = '';
+            $brandId = $brand['id'];
         }
-
-        // 2) Guardar producto
-        $this->productModel->save([
-            'name'         => $this->request->getPost('name'),
-            'description'  => $this->request->getPost('description'),
-            'brand_id'     => $this->request->getPost('brand_id'),
-            'category_id'  => $this->request->getPost('category_id'),
-            'price'        => $this->request->getPost('price'),
-            'image_url'    => $imagePath
-        ]);
-
-        // 3) Obtener el ID recién insertado
-        $productId = $this->productModel->getInsertID();
-
-        // 4) Guardar tallas y stock en product_sizes
-        //    Esperamos que el form envíe, por cada talla, un campo stock[#size_id#]
-        $sizesAll = $this->sizeModel->findAll();
-        foreach ($sizesAll as $s) {
-            $stockInputName = 'stock_' . $s->id;
-            $stockValue = (int) $this->request->getPost($stockInputName);
-
-            if ($stockValue > 0) {
-                $this->productSizeModel->save([
-                    'product_id' => $productId,
-                    'size_id'    => $s->id,
-                    'stock'      => $stockValue
-                ]);
-            }
-        }
-
-        return redirect()->to('/products');
     }
 
-    public function edit($id)
-    {
-        if (! $this->authorize()) {
-            return redirect()->to('/login');
-        }
-
-        $data['product']    = $this->productModel->find($id);
-        $data['brands']     = $this->brandModel->findAll();
-        $data['categories'] = $this->categoryModel->findAll();
-        $data['sizes']      = $this->sizeModel->findAll();
-
-        // Traer los registros de product_sizes actuales para este producto
-        $currentSizes = $this->productSizeModel
-            ->where('product_id', $id)
-            ->findAll();
-        // Para facilitar la vista, armamos un array [size_id => stock]
-        $data['productSizesStock'] = [];
-        foreach ($currentSizes as $ps) {
-            $data['productSizesStock'][$ps->size_id] = $ps->stock;
-        }
-
-        return view('products/edit', $data);
-    }
-
-    public function update($id)
-    {
-        if (! $this->authorize()) {
-            return redirect()->to('/login');
-        }
-
-        // 1) Si subió imagen nueva, procesarla; sino, dejar la ruta anterior
-        $product = $this->productModel->find($id);
-        $image    = $this->request->getFile('image');
-        if ($image && $image->isValid() && ! $image->hasMoved()) {
-            // Borrar imagen anterior si querés
-            if (! empty($product->image_url) && file_exists(WRITEPATH . '../public' . $product->image_url)) {
-                @unlink(WRITEPATH . '../public' . $product->image_url);
-            }
-
-            $newName = $image->getRandomName();
-            $image->move(WRITEPATH . '../public/uploads', $newName);
-            $imagePath = '/uploads/' . $newName;
+    if (is_numeric($categoryInput)) {
+        $categoryId = $categoryInput;
+    } else {
+        $category = $categoryModel->where('name', $categoryInput)->first();
+        if (!$category) {
+            $categoryId = $categoryModel->insert(['name' => $categoryInput], true);
         } else {
-            $imagePath = $product->image_url;
+            $categoryId = $category['id'];
+        }
+    }
+
+    $productId = $productModel->insert([
+        'name' => $this->request->getPost('name'),
+        'brand_id' => $brandId,
+        'category_id' => $categoryId,
+        'price' => $this->request->getPost('price'),
+        'description' => $this->request->getPost('description'),
+        'image_url' => $this->request->getPost('image_url')
+    ], true);
+
+    foreach ($sizesInput as $sizeEntry) {
+        $label = $sizeEntry['label'];
+        $stock = $sizeEntry['stock'];
+
+        $size = $sizeModel->where('size_label', $label)->first();
+        if (!$size) {
+            $sizeId = $sizeModel->insert(['size_label' => $label], true);
+        } else {
+            $sizeId = $size['id'];
         }
 
-        // 2) Actualizar datos del producto
-        $this->productModel->update($id, [
-            'name'         => $this->request->getPost('name'),
-            'description'  => $this->request->getPost('description'),
-            'brand_id'     => $this->request->getPost('brand_id'),
-            'category_id'  => $this->request->getPost('category_id'),
-            'price'        => $this->request->getPost('price'),
-            'image_url'    => $imagePath
+        $productSizeModel->save([
+            'product_id' => $productId,
+            'size_id' => $sizeId,
+            'stock' => $stock
         ]);
-
-        // 3) Eliminar todos los registros de product_sizes para este producto
-        $this->productSizeModel->where('product_id', $id)->delete();
-
-        // 4) Volver a insertar según los valores del formulario
-        $sizesAll = $this->sizeModel->findAll();
-        foreach ($sizesAll as $s) {
-            $stockInputName = 'stock_' . $s->id;
-            $stockValue = (int) $this->request->getPost($stockInputName);
-
-            if ($stockValue > 0) {
-                $this->productSizeModel->save([
-                    'product_id' => $id,
-                    'size_id'    => $s->id,
-                    'stock'      => $stockValue
-                ]);
-            }
-        }
-
-        return redirect()->to('/products');
     }
 
-    public function delete($id)
-    {
-        if (! $this->authorize()) {
-            return redirect()->to('/login');
-        }
+    return redirect()->to('/products')->with('success', 'Producto creado correctamente');
+}
 
-        // Eliminar producto (y se borrarán en cascada sus product_sizes)
-        $this->productModel->delete($id);
-        return redirect()->to('/products');
-    }
+
+    
+  
 }
