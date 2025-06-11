@@ -5,73 +5,63 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use CodeIgniter\Controller;
 
-class Auth extends Controller
+class Auth extends BaseController
 {
-    public function login()
+    public function showLogin()
     {
         return view('auth/login');
     }
 
-    public function index(){
-        helper(['form', 'url']);
+    public function showRegister()
+    {
+        return view('auth/register');
     }
 
-    public function login_action()
+    public function register()
+    {
+        $validation = \Config\Services::validation();
+
+        $rules = [
+            'name' => 'required|min_length[3]',
+            'email' => 'required|valid_email|is_unique[users.email]',
+            'password' => 'required|min_length[6]',
+            'confirm_password' => 'required|matches[password]',
+        ];
+
+        if (!$this->validate($rules)) {
+            return view('auth/register', ['validation' => $this->validator]);
+        }
+
+        $model = new UserModel();
+        $model->save([
+            'name' => $this->request->getPost('name'),
+            'email' => $this->request->getPost('email'),
+            'password' => $this->request->getPost('password'),
+        ]);
+
+        return redirect()->to('/login')->with('success', 'Registro exitoso');
+    }
+
+    public function login()
     {
         $session = session();
         $model = new UserModel();
 
-        $email = $this->request->getVar('email');
-        $password = $this->request->getVar('password');
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
 
         $user = $model->where('email', $email)->first();
 
-        if ($user) {
-            $pass = $user->password;
-            $verify_pass = password_verify($password, $pass);
-            if($verify_pass){
-                $ses_data = [
-                    'id'       => $user->id,
-                    'name'     => $user->name,
-                    'email'    => $user->email,
-                    'role'     => $user->role,
-                    'logged_in' => TRUE
-                ];
-                $session->set($ses_data);
-
-                session()->setFlashdata('msg', 'Hola Mundo!');
-                return redirect()->to('/commercial');
-            }else {
-                dd('Contraseña incorrecta', $password, $pass);
-                session()->setFlashdata('msg', 'Sos boludo e, le erraste la contraseña pa');
-                return redirect()->to('/login');
-            } 
-        }else{
-            session()->setFlashdata('msg', 'Sos boludo e, le erraste al email ahora pa');
-            return redirect()->to('/login');
-        }
-    }
-
-    public function register_action()
-    {
-        $model = new UserModel();
-
-        $data = [
-            'name'     => $this->request->getPost('name'),
-            'email'    => $this->request->getPost('email'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'role'     => 'cliente' // por defecto
-        ];
-
-        $r = $model->insert($data);
-
-        if ($r)
-        {
-            echo "Usuario registrado con exito!";
-        }
-        else
-        {
-            echo "Error en el registro.";
+        if ($user && password_verify($password, $user['password'])) {
+            $session->set([
+                'user_id' => $user['id'],
+                'user_name' => $user['name'],
+                'user_role' => $user['role'],
+                'logged_in' => true,
+            ]);
+            return redirect()->to('/');
+        } else {
+            return redirect()->back()->with('error', 'Credenciales inválidas');
         }
     }
 

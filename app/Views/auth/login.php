@@ -20,8 +20,13 @@ Iniciar Sesion
                     <h2>Bienvenido de nuevo</h2>
                     <p>Ingresa tus credenciales para acceder a tu cuenta</p>
                 </div>
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="error">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
 
-                <form action="<?php echo site_url('/auth/login_action'); ?>" method="POST" class="auth-form">
+                <form action="<?php echo site_url('/login'); ?>" method="POST" class="auth-form">
                     <div class="input-group">
                         <label for="loginEmail">Correo electrónico</label>
                         <div class="input-wrapper">
@@ -56,8 +61,12 @@ Iniciar Sesion
                     <h2>Crear una cuenta</h2>
                     <p>Ingresa tus datos para registrarte</p>
                 </div>
-
-                <form action="<?php echo base_url('auth/register-action'); ?>" method="POST" class="auth-form">
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="error">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
+                <form action="<?php echo site_url('/register'); ?>" method="POST" class="auth-form">
                     <div class="input-group">
                         <label for="registerName">Nombre completo</label>
                         <div class="input-wrapper">

@@ -140,6 +140,7 @@ CREATE TABLE `users` (
   `email` varchar(150) NOT NULL,
   `password` varchar(150) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `role` enum('cliente','vendedor','admin') NOT NULL DEFAULT 'cliente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -308,10 +309,7 @@ ALTER TABLE `product_sizes`
 --
 -- Filtros para la tabla `users`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id`) REFERENCES `orders` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
+ALTER TABLE `users` ADD UNIQUE (`email`);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

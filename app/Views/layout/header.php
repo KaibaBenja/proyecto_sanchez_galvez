@@ -11,7 +11,14 @@
             <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
             <li><a href="<?= site_url('commercial') ?>">Comercialización</a></li>
             <li><a href="<?= site_url('terms') ?>">Términos y Usos</a></li>
-            <li><a href="<?= site_url('login') ?>">Iniciar Sesión</a></li>
+            <?php if (session()->get('logged_in')): ?>
+                <div class="user-info">
+                    <i class="fas fa-user"></i> |
+                    <a href="<?= site_url('/logout') ?>">Cerrar sesión</a>
+                </div>
+            <?php else: ?>
+                <a href="<?= site_url('/login') ?>">Iniciar sesión</a>
+            <?php endif; ?>
         </ul>
         <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><img src="assets/img/menu.png" alt="menu"></button>
 
@@ -29,7 +36,14 @@
                 <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
                 <li><a href="<?= site_url('commercial') ?>">Comercialización</a></li>
                 <li><a href="<?= site_url('terms') ?>">Términos y Usos</a></li>
-                <li><a href="<?= site_url('terms') ?>">Iniciar Sesión</a></li>
+                <?php if (session()->get('logged_in')): ?>
+                    <div class="user-info">
+                        <i class="fas fa-user"></i> |
+                        <a href="<?= site_url('/logout') ?>">Cerrar sesión</a>
+                    </div>
+                <?php else: ?>
+                    <a href="<?= site_url('/login') ?>">Iniciar sesión</a>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
