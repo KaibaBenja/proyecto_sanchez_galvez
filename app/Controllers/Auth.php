@@ -3,24 +3,30 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
-use CodeIgniter\Controller;
 
 class Auth extends BaseController
 {
     public function showLogin()
     {
+        if (session()->get('logged_in')) {
+            return redirect()->to('/')->with('error', 'Acceso no autorizado');
+        }
         return view('auth/login');
     }
 
     public function showRegister()
     {
+        if (session()->get('logged_in')) {
+            return redirect()->to('/')->with('error', 'Acceso no autorizado');
+        }
         return view('auth/register');
     }
 
     public function register()
     {
-        $validation = \Config\Services::validation();
-
+        if (session()->get('logged_in')) {
+            return redirect()->to('/')->with('error', 'Acceso no autorizado');
+        }
         $rules = [
             'name' => 'required|min_length[3]',
             'email' => 'required|valid_email|is_unique[users.email]',
@@ -44,6 +50,9 @@ class Auth extends BaseController
 
     public function login()
     {
+        if (session()->get('logged_in')) {
+            return redirect()->to('/')->with('error', 'Acceso no autorizado');
+        }
         $session = session();
         $model = new UserModel();
 

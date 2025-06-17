@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
+
 class ProductModel extends Model
 {
     protected $table = 'products';
@@ -13,7 +15,8 @@ class ProductModel extends Model
         'category_id',
         'price',
         'image_url',
-        'created_at'
+        'created_at',
+        'updated_at',
     ];
     protected $returnType = true;
 }

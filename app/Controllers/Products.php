@@ -10,101 +10,111 @@ use App\Models\ProductSizeModel;
 
 class Products extends BaseController
 {
-    protected $productModel;
-    protected $brandModel;
-    protected $categoryModel;
-    protected $sizeModel;
-    protected $productSizeModel;
-
-    public function __construct()
+    public function create()
     {
-        helper(['auth']);
-        $this->productModel      = new ProductModel();
-        $this->brandModel        = new BrandModel();
-        $this->categoryModel     = new CategoryModel();
-        $this->sizeModel         = new SizeModel();
-        $this->productSizeModel  = new ProductSizeModel();
-    }
+        // Validar acceso solo a admin o vendedor
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+            return redirect()->to('/login')->with('error', 'Acceso no autorizado');
+        }
 
-    public function createProducts(){
-        return view('products/create');
-    }
+        $brandModel = new BrandModel();
+        $categoryModel = new CategoryModel();
+        $sizeModel = new SizeModel();
 
-    private function authorize()
-    {
-        $role = session()->get('user_role');
-        return in_array($role, ['admin', 'vendedor']);
+        $data = [
+            'brands'     => $brandModel->findAll(),
+            'categories' => $categoryModel->findAll(),
+            'sizes'      => $sizeModel->findAll(),
+        ];
+
+        return view('dashboard/products/create', $data);
     }
 
     public function store()
-{
-    if (! $this->authorize()) {
-            return redirect()->to('/login');
+    {
+        // Validar acceso solo a admin o vendedor
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+            return redirect()->to('/login')->with('error', 'Acceso no autorizado');
         }
 
-    $productModel = new \App\Models\ProductModel();
-    $brandModel = new \App\Models\BrandModel();
-    $categoryModel = new \App\Models\CategoryModel();
-    $sizeModel = new \App\Models\SizeModel();
-    $productSizeModel = new \App\Models\ProductSizeModel();
+        helper(['form', 'url']);
 
-    $brandInput = $this->request->getPost('brand');
-    $categoryInput = $this->request->getPost('category');
-    $sizesInput = $this->request->getPost('sizes'); 
-
-    if (is_numeric($brandInput)) {
-        $brandId = $brandInput;
-    } else {
-        $brand = $brandModel->where('name', $brandInput)->first();
-        if (!$brand) {
-            $brandId = $brandModel->insert(['name' => $brandInput], true);
-        } else {
-            $brandId = $brand['id'];
-        }
-    }
-
-    if (is_numeric($categoryInput)) {
-        $categoryId = $categoryInput;
-    } else {
-        $category = $categoryModel->where('name', $categoryInput)->first();
-        if (!$category) {
-            $categoryId = $categoryModel->insert(['name' => $categoryInput], true);
-        } else {
-            $categoryId = $category['id'];
-        }
-    }
-
-    $productId = $productModel->insert([
-        'name' => $this->request->getPost('name'),
-        'brand_id' => $brandId,
-        'category_id' => $categoryId,
-        'price' => $this->request->getPost('price'),
-        'description' => $this->request->getPost('description'),
-        'image_url' => $this->request->getPost('image_url')
-    ], true);
-
-    foreach ($sizesInput as $sizeEntry) {
-        $label = $sizeEntry['label'];
-        $stock = $sizeEntry['stock'];
-
-        $size = $sizeModel->where('size_label', $label)->first();
-        if (!$size) {
-            $sizeId = $sizeModel->insert(['size_label' => $label], true);
-        } else {
-            $sizeId = $size['id'];
-        }
-
-        $productSizeModel->save([
-            'product_id' => $productId,
-            'size_id' => $sizeId,
-            'stock' => $stock
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'name'        => 'required|min_length[2]',
+            'price'       => 'required|numeric',
+            'description' => 'permit_empty|string',
+            'image'       => 'uploaded[image]|is_image[image]|max_size[image,2048]',
         ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        $productModel     = new ProductModel();
+        $brandModel       = new BrandModel();
+        $categoryModel    = new CategoryModel();
+        $sizeModel        = new SizeModel();
+        $productSizeModel = new ProductSizeModel();
+
+        $request = $this->request->getPost();
+
+        // Crear marca si se ingresó nueva
+        if (empty($request['brand_id']) && !empty($request['new_brand'])) {
+            $brandModel->insert(['name' => $request['new_brand']]);
+            $request['brand_id'] = $brandModel->getInsertID();
+        }
+
+        // Crear categoría si se ingresó nueva
+        if (empty($request['category_id']) && !empty($request['new_category'])) {
+            $categoryModel->insert(['name' => $request['new_category']]);
+            $request['category_id'] = $categoryModel->getInsertID();
+        }
+
+        // Subida de imagen
+        $imageFile = $this->request->getFile('image');
+        $imageName = '';
+
+        if ($imageFile && $imageFile->isValid() && !$imageFile->hasMoved()) {
+            $imageName = $imageFile->getRandomName();
+            $imageFile->move(ROOTPATH . 'public/uploads/', $imageName);
+        }
+
+        // Insertar producto
+        $productId = $productModel->insert([
+            'name'        => $request['name'],
+            'price'       => $request['price'],
+            'description' => $request['description'],
+            'brand_id'    => $request['brand_id'],
+            'category_id' => $request['category_id'],
+            'image_url'   => $imageName,
+        ]);
+
+        // Guardar talles y stock
+        $sizes      = $this->request->getPost('sizes');
+        $newSizes   = $this->request->getPost('new_sizes');
+        $stocks     = $this->request->getPost('stocks');
+
+        if ($sizes && $stocks && count($sizes) === count($stocks)) {
+            foreach ($sizes as $index => $sizeId) {
+                $stock = $stocks[$index];
+                $newSizeLabel = trim($newSizes[$index]);
+
+                if ($sizeId === '__new__' && $newSizeLabel !== '') {
+                    $sizeModel->insert(['size_label' => $newSizeLabel]);
+                    $sizeId = $sizeModel->getInsertID();
+                }
+
+                if (!empty($sizeId) && is_numeric($sizeId) && is_numeric($stock)) {
+                    $productSizeModel->insert([
+                        'product_id' => $productId,
+                        'size_id'    => $sizeId,
+                        'stock'      => $stock,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->to('/')->with('success', 'Producto creado correctamente');
     }
-
-    return redirect()->to('/products')->with('success', 'Producto creado correctamente');
-}
-
-
-    
-  
 }

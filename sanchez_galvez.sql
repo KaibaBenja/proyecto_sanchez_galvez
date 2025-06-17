@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2025 a las 16:47:55
+-- Tiempo de generación: 17-06-2025 a las 14:16:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -99,7 +99,7 @@ CREATE TABLE `products` (
   `brand_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `description` varchar(150) NOT NULL,
+  `description` text NOT NULL,
   `image_url` varchar(200) NOT NULL,
   `created_at` datetime(6) NOT NULL DEFAULT current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -143,6 +143,14 @@ CREATE TABLE `users` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `role` enum('cliente','vendedor','admin') NOT NULL DEFAULT 'cliente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`, `role`) VALUES
+(5, 'Facundo Ruben Boutron Angeloff', 'martinbosch1996@gmail.com', '$2y$10$O8kGfSqaXPyuhHPHezwaW.4tlOsywNVkqmkZBZ4HltL1GVDtdkbpC', '2025-06-17 12:02:13', '2025-06-17 12:02:13', 'cliente'),
+(6, 'Admin Sanchez', 'admin@sneakers.com', '$2y$10$qJO8lsib0NOP0VYhU4TxIeqNN1UVdfYW/xflAl6tJu2DsYXmpSavG', '2025-06-17 12:05:06', '2025-06-17 12:05:06', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -267,7 +275,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -278,12 +286,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `addresses`
   ADD CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id`) REFERENCES `order_items` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `order_items`
@@ -305,11 +307,8 @@ ALTER TABLE `products`
 ALTER TABLE `product_sizes`
   ADD CONSTRAINT `product_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `product_sizes_ibfk_2` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
---
--- Filtros para la tabla `users`
---
-ALTER TABLE `users` ADD UNIQUE (`email`);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
