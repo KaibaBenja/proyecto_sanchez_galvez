@@ -444,3 +444,40 @@ DEBUG - 2025-06-17 15:12:34 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2025-06-17 15:14:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-06-17 15:15:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-06-17 15:15:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-17 15:24:28 --> TypeError: CodeIgniter\Database\BaseResult::getResult(): Argument #1 ($type) must be of type string, bool given, called in C:\xampp\htdocs\proyecto_sanchez_galvez\system\Model.php on line 287
+[Method: GET, Route: dashboard/products]
+in SYSTEMPATH\Database\BaseResult.php on line 106.
+ 1 SYSTEMPATH\Model.php(287): CodeIgniter\Database\BaseResult->getResult(true)
+ 2 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 3 APPPATH\Controllers\Products.php(128): CodeIgniter\BaseModel->findAll()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-17 15:24:50 --> TypeError: CodeIgniter\Database\BaseResult::getResult(): Argument #1 ($type) must be of type string, bool given, called in C:\xampp\htdocs\proyecto_sanchez_galvez\system\Model.php on line 287
+[Method: GET, Route: dashboard/products]
+in SYSTEMPATH\Database\BaseResult.php on line 106.
+ 1 SYSTEMPATH\Model.php(287): CodeIgniter\Database\BaseResult->getResult(true)
+ 2 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 3 APPPATH\Controllers\Products.php(128): CodeIgniter\BaseModel->findAll()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-17 15:25:45 --> TypeError: CodeIgniter\Database\BaseResult::getResult(): Argument #1 ($type) must be of type string, bool given, called in C:\xampp\htdocs\proyecto_sanchez_galvez\system\Model.php on line 287
+[Method: GET, Route: dashboard/products]
+in SYSTEMPATH\Database\BaseResult.php on line 106.
+ 1 SYSTEMPATH\Model.php(287): CodeIgniter\Database\BaseResult->getResult(true)
+ 2 SYSTEMPATH\BaseModel.php(675): CodeIgniter\Model->doFindAll(0, 0)
+ 3 APPPATH\Controllers\Products.php(147): CodeIgniter\BaseModel->findAll()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Products->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Products))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-06-17 15:26:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

@@ -114,7 +114,47 @@ class Products extends BaseController
                 }
             }
         }
-
         return redirect()->to('/')->with('success', 'Producto creado correctamente');
+    }
+
+    public function index()
+    {
+        $productModel  = new \App\Models\ProductModel();
+        $brandModel    = new \App\Models\BrandModel();
+        $categoryModel = new \App\Models\CategoryModel();
+
+        $search         = $this->request->getGet('search');
+        $brandId        = $this->request->getGet('brand');
+        $categoryId     = $this->request->getGet('category');
+
+        $builder = $productModel
+            ->select('products.*, brands.name AS brand_name, categories.name AS category_name')
+            ->join('brands', 'brands.id = products.brand_id', 'left')
+            ->join('categories', 'categories.id = products.category_id', 'left');
+
+        if (!empty($search)) {
+            $builder->like('products.name', $search);
+        }
+
+        if (!empty($brandId)) {
+            $builder->where('products.brand_id', $brandId);
+        }
+
+        if (!empty($categoryId)) {
+            $builder->where('products.category_id', $categoryId);
+        }
+
+        $products = $builder->get()->getResultArray();
+        $brands     = $brandModel->findAll();
+        $categories = $categoryModel->findAll();
+
+        return view('dashboard/products/index', [
+            'products'        => $products,
+            'brands'          => $brands,
+            'categories'      => $categories,
+            'selectedBrand'   => $brandId,
+            'selectedCategory' => $categoryId,
+            'search'          => $search,
+        ]);
     }
 }
