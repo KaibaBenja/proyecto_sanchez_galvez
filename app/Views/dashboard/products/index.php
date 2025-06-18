@@ -20,6 +20,7 @@
             gap: 10px;
             flex-wrap: wrap;
             margin-bottom: 20px;
+            margin-top: 20px;
         }
 
         .filter-form input,
@@ -85,6 +86,7 @@
             background-color: green;
             color: white;
             padding: 10px 15px;
+            margin-bottom: 20px;
             border: none;
             border-radius: 4px;
             text-decoration: none;
@@ -150,17 +152,17 @@
                 <?php foreach ($products as $product): ?>
                     <tr>
                         <td>
-                            <?php if (!empty($product->image_url)): ?>
-                                <img src="<?= base_url('uploads/' . $product->image_url) ?>" class="thumb">
+                            <?php if (!empty($product['image_url'])): ?>
+                                <img src="<?= base_url('uploads/' . $product['image_url']) ?>" class="thumb">
                             <?php endif; ?>
                         </td>
-                        <td><?= esc($product->name) ?></td>
-                        <td>$<?= number_format($product->price, 2) ?></td>
-                        <td><?= esc($product->brand_name) ?></td>
-                        <td><?= esc($product->category_name) ?></td>
+                        <td><?= esc($product['name']) ?></td>
+                        <td>$<?= number_format($product['price'], 2) ?></td>
+                        <td><?= esc($product['brand_name']) ?></td>
+                        <td><?= esc($product['category_name']) ?></td>
                         <td class="actions">
-                            <a href="<?= site_url('dashboard/products/edit/' . $product->id) ?>" class="btn btn-edit">Editar</a>
-                            <form action="<?= site_url('dashboard/products/delete/' . $product->id) ?>" method="post" onsubmit="return confirm('¿Eliminar este producto?');">
+                            <a href="<?= site_url('dashboard/products/edit/' . $product['id']) ?>" class="btn btn-edit">Editar</a>
+                            <form action="<?= site_url('dashboard/products/delete/' . $product['id']) ?>" method="post" onsubmit="return confirm('¿Eliminar este producto?');">
                                 <?= csrf_field() ?>
                                 <button type="submit" class="btn btn-delete">Eliminar</button>
                             </form>

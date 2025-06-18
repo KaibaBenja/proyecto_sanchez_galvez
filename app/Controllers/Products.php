@@ -157,4 +157,86 @@ class Products extends BaseController
             'search'          => $search,
         ]);
     }
+
+    public function showProducts(){
+
+        $productModel     = new \App\Models\ProductModel();
+        $brandModel       = new \App\Models\BrandModel();
+        $sizeModel        = new \App\Models\SizeModel();
+        $productSizeModel = new \App\Models\ProductSizeModel();
+
+        $brandId = $this->request->getGet('brand');
+        $sizeId  = $this->request->getGet('size');
+
+        $builder = $productModel
+            ->select('products.*, brands.name as brand_name')
+            ->join('brands', 'brands.id = products.brand_id', 'left');
+
+        if (!empty($sizeId)) {
+            $builder->join('product_sizes', 'product_sizes.product_id = products.id')
+                    ->where('product_sizes.size_id', $sizeId);
+        }
+
+        if (!empty($brandId)) {
+            $builder->where('products.brand_id', $brandId);
+        }
+
+        $productsRaw = $builder->groupBy('products.id')->get()->getResultArray();
+        $brands = $brandModel->findAll();
+        $sizes = $sizeModel->findAll();
+
+        // Agregar talles disponibles por producto
+        $products = [];
+        foreach ($productsRaw as $product) {
+            $productSizes = $productSizeModel
+                ->select('sizes.size_label')
+                ->join('sizes', 'sizes.id = product_sizes.size_id')
+                ->where('product_sizes.product_id', $product['id'])
+                ->findAll();
+
+            $product['sizes'] = array_column($productSizes, 'size_label');
+            $products[] = $product;
+        }
+
+        return view('products/index', [
+            'products' => $products,
+            'brands' => $brands,
+            'sizes' => $sizes,
+            'selectedBrand' => $brandId,
+            'selectedSize' => $sizeId,
+        ]);
+    }
+
+
+public function show($id){
+    $productModel     = new \App\Models\ProductModel();
+    $brandModel       = new \App\Models\BrandModel();
+    $sizeModel        = new \App\Models\SizeModel();
+    $productSizeModel = new \App\Models\ProductSizeModel();
+
+    $product = $productModel
+        ->select('products.*, brands.name AS brand_name, categories.name AS category_name')
+        ->join('brands', 'brands.id = products.brand_id', 'left')
+        ->join('categories', 'categories.id = products.category_id', 'left')
+        ->where('products.id', $id)
+        ->get()
+        ->getFirstRow('array');
+
+    if (!$product) {
+        throw new \CodeIgniter\Exceptions\PageNotFoundException('Producto no encontrado');
+    }
+
+    // Talles disponibles
+    $sizes = $productSizeModel
+        ->select('sizes.id as size_id, sizes.size_label, product_sizes.stock')
+        ->join('sizes', 'sizes.id = product_sizes.size_id')
+        ->where('product_sizes.product_id', $id)
+        ->findAll();
+
+    return view('products/product', [
+        'product' => $product,
+        'sizes'   => $sizes,
+    ]);
+}
+
 }

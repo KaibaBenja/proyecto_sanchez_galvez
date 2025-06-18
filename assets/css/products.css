@@ -1,0 +1,197 @@
+.products,
+.product-detail {
+  padding: 60px 20px;
+  background: #f9f9f9;
+}
+
+.filters {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.filters form select,
+.filters form button {
+  padding: 10px;
+  margin: 5px;
+  font-size: 1em;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.product-card {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product-card h3 {
+  font-family: "League Gothic", sans-serif;
+  font-size: 1.5em;
+  margin: 10px 0;
+  color: #232442;
+}
+
+.product-card p {
+  font-family: Karla, sans-serif;
+  margin: 5px 0;
+  color: #232442;
+}
+
+.product-card .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-color: #232442;
+  border-radius: 5px;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+.product-card .btn:hover {
+  background: #3a3a5a;
+}
+
+.product-detail .detail-container {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.product-detail img {
+  max-width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-info h1 {
+  font-family: "League Gothic", sans-serif;
+  font-size: 3em;
+  margin-bottom: 10px;
+  color: #232442;
+}
+
+.product-info p,
+.product-info ul,
+.product-info h4 {
+  font-family: Karla, sans-serif;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #232442;
+}
+
+.product-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.product-detail .btn {
+  background: #232442;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.product-detail .btn:hover {
+  background: #3a3a5a;
+}
+
+.size-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.size-btn {
+  padding: 10px 20px;
+  border: 2px solid #232442;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.size-btn:hover {
+  border-color: #666;
+}
+
+.size-btn.selected {
+  background: #3a3a5a;
+  color: white;
+  border-color: #232442;
+}
+
+.size-btn.disabled {
+  background: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+
+.stock-info {
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-btn {
+  padding: 5px 15px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.quantity-selector label {
+  color: #232442;
+}
+
+.quantity-btn:hover {
+  background: #e5e5e5;
+}
+
+#quantity {
+  width: 60px;
+  text-align: center;
+  padding: 5px;
+}

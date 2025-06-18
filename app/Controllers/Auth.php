@@ -14,13 +14,6 @@ class Auth extends BaseController
         return view('auth/login');
     }
 
-    public function showRegister()
-    {
-        if (session()->get('logged_in')) {
-            return redirect()->to('/')->with('error', 'Acceso no autorizado');
-        }
-        return view('auth/register');
-    }
 
     public function register()
     {
@@ -35,7 +28,7 @@ class Auth extends BaseController
         ];
 
         if (!$this->validate($rules)) {
-            return view('auth/register', ['validation' => $this->validator]);
+            return view('auth/login', ['validation' => $this->validator]);
         }
 
         $model = new UserModel();
