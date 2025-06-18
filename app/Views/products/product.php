@@ -30,10 +30,11 @@ Producto
                                 $unique_sizes[$size->size_label] = $size;
                         ?>
                                 <button type="button"
-                                    class="size-btn"
+                                    class="size-btn <?= $size->stock == 0 ? 'disabled' : '' ?>"
                                     data-size-id="<?= esc($size->size_id) ?>"
                                     data-stock="<?= esc($size->stock) ?>"
-                                    data-size-label="<?= esc($size->size_label) ?>">
+                                    data-size-label="<?= esc($size->size_label) ?>"
+                                    <?= $size->stock == 0 ? 'disabled' : '' ?>>
                                     <?= esc($size->size_label) ?>
                                     <span class="stock-info">(<?= esc($size->stock) ?>)</span>
                                 </button>

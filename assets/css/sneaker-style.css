@@ -19,7 +19,7 @@ body {
     padding-right: 5px;
     padding-left: 5px;
     border-radius: 0 0 10px 10px;
-    z-index: 10;
+    z-index: 1000;
     width: min(1200px, 90vw);
     height: 70px;
     left: 50%;
@@ -42,7 +42,6 @@ body {
         display: flex;
         justify-content: space-between;
         gap: 10px;
-
       }
       & .btn {
         display: none;
@@ -215,7 +214,6 @@ body {
   }
 }
 
-
 body {
   & .carousel {
     --calculation: 1;
@@ -273,7 +271,6 @@ body {
     }
   }
 }
-
 
 @media screen and (max-width: 1023px) and (min-width: 768px) {
   :root {
@@ -391,8 +388,6 @@ body {
     background-color: white;
   }
 
-
-
   :root {
     --w-column: 0px;
   }
@@ -420,7 +415,7 @@ body {
   );
 }
 
-a{
+a {
   text-decoration: none;
   color: black;
   font-family: Karla;
@@ -428,20 +423,34 @@ a{
 
 .offcanvas {
   background-color: white;
+  z-index: 1055 !important;
   height: 100vh;
 }
 
 .offcanvas-header {
-  border-bottom: 1px solid #ddd; 
+  border-bottom: 1px solid #ddd;
 }
 
 .offcanvas-body {
-  background-color: white; 
-  padding: 1.5rem; 
+  background-color: white;
+  padding: 1.5rem;
   color: black;
-  height: 100vh; 
+  height: 100vh;
 }
 
 body header.scrolled {
   background-color: white;
+}
+
+.offcanvas-backdrop {
+  z-index: 1040 !important;
+}
+
+.offcanvas {
+  z-index: 1055 !important;
+}
+
+.offcanvas-body {
+  position: relative;
+  z-index: 1060;
 }

@@ -35,3 +35,4 @@ $routes->group('cart', ['filter' => 'roleGuard:cliente'], function ($routes) {
     $routes->post('checkout', 'Cart::checkout');
     $routes->get('clear', 'Cart::clear');
 });
+$routes->get('/orders', 'Orders::index', ['filter' => 'roleGuard:cliente']);

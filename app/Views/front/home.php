@@ -15,12 +15,10 @@ Home
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
                     <h2>JORDAN 1</h2>
-                    <p class="description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
-                    </p>
+                    
                     <div class="more">
-                        <button>Añadir al carrito</button>
-                        <button>Mostrar más</button>
+                        <button onclick="window.location.href='<?= site_url('productos') ?>'">Añadir al carrito</button>
+                        <button onclick="window.location.href='<?= site_url('productos') ?>'">Mostrar más</button>
                     </div>
                 </div>
             </div>
@@ -31,12 +29,10 @@ Home
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
                     <h2>ADI2000</h2>
-                    <p class="description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
-                    </p>
+                    
                     <div class="more">
-                        <button>Añadir al carrito</button>
-                        <button>Mostrar más</button>
+                        <button onclick="window.location.href='<?= site_url('productos') ?>'">Añadir al carrito</button>
+                        <button onclick="window.location.href='<?= site_url('productos') ?>'">Mostrar más</button>
                     </div>
                 </div>
             </div>
@@ -47,12 +43,10 @@ Home
                 <div class="content">
                     <p class="category">Lifestyle Shoe</p>
                     <h2>JORDAN 4</h2>
-                    <p class="description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, nihil accusamus a dolor labore vel error voluptas voluptates! Saepe, rem?
-                    </p>
+                    
                     <div class="more">
-                        <button>Añadir al carrito</button>
-                        <button>Mostrar más</button>
+                        <button onclick="window.location.href='<?= site_url('productos') ?>'">Añadir al carrito</button>
+                        <button onclick="window.location.href='<?= site_url('productos') ?>'">Mostrar más</button>
                     </div>
                 </div>
             </div>

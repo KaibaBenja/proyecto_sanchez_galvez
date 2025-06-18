@@ -12,6 +12,7 @@ class Cart extends BaseController
 {
     protected $cartModel;
     protected $sizeModel;
+
     public function __construct()
     {
         $this->cartModel = new CartModel();
@@ -42,7 +43,6 @@ class Cart extends BaseController
         $sizeId    = $this->request->getPost('size_id');
         $quantity  = (int) $this->request->getPost('quantity') ?? 1;
 
-        // Buscar si ya existe el ítem (activo o no)
         $existing = $this->cartModel
             ->where([
                 'user_id'    => $userId,
@@ -74,7 +74,6 @@ class Cart extends BaseController
 
         return redirect()->to('/cart')->with('success', 'Producto agregado al carrito.');
     }
-
 
     public function update()
     {
@@ -120,7 +119,12 @@ class Cart extends BaseController
     {
         $userId = session()->get('user_id');
 
-        $cartItems = $this->cartModel->getUserCart($userId);
+        $cartItems = $this->cartModel
+            ->select('cart.*, products.price')
+            ->join('products', 'products.id = cart.product_id')
+            ->where('cart.user_id', $userId)
+            ->where('cart.active', 1)
+            ->findAll();
 
         if (empty($cartItems)) {
             return redirect()->to('/cart')->with('error', 'Tu carrito está vacío.');
@@ -132,7 +136,6 @@ class Cart extends BaseController
 
         $total = 0;
 
-        // Validar stock y calcular total
         foreach ($cartItems as $item) {
             $stockRecord = $productSizeModel
                 ->where('product_id', $item['product_id'])
@@ -140,21 +143,18 @@ class Cart extends BaseController
                 ->first();
 
             if (!$stockRecord || $stockRecord->stock < $item['quantity']) {
-                return redirect()->to('/cart')->with('error', 'Stock insuficiente para ' . $item['name']);
+                return redirect()->to('/cart')->with('error', 'Stock insuficiente para un producto.');
             }
 
             $total += $item['quantity'] * $item['price'];
         }
 
-        // Crear la orden
         $orderId = $orderModel->insert([
-            'user_id' => $userId,
-            'total'   => $total,
+            'user_id'     => $userId,
+            'total_price' => $total
         ]);
 
-        // Registrar ítems y descontar stock
         foreach ($cartItems as $item) {
-            // Descontar stock
             $stockRecord = $productSizeModel
                 ->where('product_id', $item['product_id'])
                 ->where('size_id', $item['size_id'])
@@ -164,23 +164,21 @@ class Cart extends BaseController
                 'stock' => $stockRecord->stock - $item['quantity']
             ]);
 
-            // Insertar ítem de orden
             $orderItemModel->insert([
-                'order_id'   => $orderId,
-                'product_id' => $item['product_id'],
-                'size_id'    => $item['size_id'],
-                'quantity'   => $item['quantity'],
-                'price'      => $item['price'],
+                'order_id'          => $orderId,
+                'product_id'        => $item['product_id'],
+                'size_id'           => $item['size_id'],
+                'quantity'          => $item['quantity'],
+                'price_at_purchase' => $item['price'],
             ]);
         }
 
-        // Desactivar carrito
         $this->cartModel
             ->where('user_id', $userId)
             ->where('active', 1)
             ->set(['active' => 0])
             ->update();
 
-        return redirect()->to('/cart')->with('success', '¡Compra realizada con éxito!');
+        return redirect()->to('/orders')->with('success', '¡Compra realizada con éxito!');
     }
 }

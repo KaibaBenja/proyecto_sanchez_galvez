@@ -13,6 +13,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/styles.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/header.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/sneaker-style.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/about.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/comercializacion.css') ?>">

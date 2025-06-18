@@ -106,11 +106,22 @@ class Products extends BaseController
                 }
 
                 if (!empty($sizeId) && is_numeric($sizeId) && is_numeric($stock)) {
-                    $productSizeModel->insert([
-                        'product_id' => $productId,
-                        'size_id'    => $sizeId,
-                        'stock'      => $stock,
-                    ]);
+                    $existing = $productSizeModel
+                        ->where('product_id', $productId)
+                        ->where('size_id', $sizeId)
+                        ->first();
+
+                    if ($existing) {
+                        $productSizeModel->update($existing->id, [
+                            'stock' => $existing->stock + $stock
+                        ]);
+                    } else {
+                        $productSizeModel->insert([
+                            'product_id' => $productId,
+                            'size_id'    => $sizeId,
+                            'stock'      => $stock,
+                        ]);
+                    }
                 }
             }
         }
