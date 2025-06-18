@@ -17,7 +17,7 @@
                     <ul class="footer-links">
                         <li><a href="<?= base_url() ?>  ">Inicio</a></li>
                         <li><a href="<?= site_url('about') ?>">Sobre Nosotros</a></li>
-                        <li><a href="<?= site_url('products') ?>">Productos</a></li>
+                        <li><a href="<?= site_url('productos') ?>">Productos</a></li>
                         <li><a href="<?= site_url() ?>">Ofertas</a></li>
                         <li><a href="<?= site_url('contact') ?>">Contacto</a></li>
                     </ul>

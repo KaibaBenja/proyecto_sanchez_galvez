@@ -36,3 +36,6 @@ $routes->group('cart', ['filter' => 'roleGuard:cliente'], function ($routes) {
     $routes->get('clear', 'Cart::clear');
 });
 $routes->get('/orders', 'Orders::index', ['filter' => 'roleGuard:cliente']);
+$routes->set404Override(function(){
+    return view('/errors/html/error_404.php');
+});
