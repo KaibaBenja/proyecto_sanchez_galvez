@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\CartModel;
+use App\Models\OrderItemModel;
+use App\Models\OrderModel;
+use App\Models\ProductSizeModel;
 use App\Models\SizeModel;
 
 class Cart extends BaseController
@@ -15,10 +18,21 @@ class Cart extends BaseController
         $this->sizeModel = new SizeModel();
     }
 
-    public function index(){
+    public function index()
+    {
         $userId = session()->get('user_id');
-        $cartItems = $this->cartModel->getUserCart($userId);
-        return view('cart/index', ['cartItems' => $cartItems]);
+
+        $cartItems = $this->cartModel
+            ->select('cart.*, products.name, products.price, products.image_url, sizes.size_label')
+            ->join('products', 'products.id = cart.product_id')
+            ->join('sizes', 'sizes.id = cart.size_id')
+            ->where('cart.user_id', $userId)
+            ->where('cart.active', 1)
+            ->findAll();
+
+        return view('cart/index', [
+            'cartItems' => $cartItems
+        ]);
     }
 
     public function add()
@@ -26,32 +40,41 @@ class Cart extends BaseController
         $userId    = session()->get('user_id');
         $productId = $this->request->getPost('product_id');
         $sizeId    = $this->request->getPost('size_id');
-        $quantity  = (int) ($this->request->getPost('quantity') ?? 1);
+        $quantity  = (int) $this->request->getPost('quantity') ?? 1;
 
-        if (!$sizeId || !$this->sizeModel->find($sizeId)) {
-            return redirect()->back()->with('error', 'Debe seleccionar un talle válido.');
-        }
-
+        // Buscar si ya existe el ítem (activo o no)
         $existing = $this->cartModel
-            ->where(['user_id' => $userId, 'product_id' => $productId, 'size_id' => $sizeId, 'active' => 1])
+            ->where([
+                'user_id'    => $userId,
+                'product_id' => $productId,
+                'size_id'    => $sizeId
+            ])
             ->first();
 
         if ($existing) {
-            $this->cartModel->update($existing['id'], [
-                'quantity' => $existing['quantity'] + $quantity
-            ]);
+            if ($existing['active']) {
+                $this->cartModel->update($existing['id'], [
+                    'quantity' => $existing['quantity'] + $quantity
+                ]);
+            } else {
+                $this->cartModel->update($existing['id'], [
+                    'quantity' => $quantity,
+                    'active'   => 1
+                ]);
+            }
         } else {
             $this->cartModel->insert([
                 'user_id'    => $userId,
                 'product_id' => $productId,
                 'size_id'    => $sizeId,
                 'quantity'   => $quantity,
-                'active'     => 1,
+                'active'     => 1
             ]);
         }
 
         return redirect()->to('/cart')->with('success', 'Producto agregado al carrito.');
     }
+
 
     public function update()
     {
@@ -91,5 +114,73 @@ class Cart extends BaseController
             ->update();
 
         return redirect()->to('/cart')->with('success', 'Carrito vaciado.');
+    }
+
+    public function checkout()
+    {
+        $userId = session()->get('user_id');
+
+        $cartItems = $this->cartModel->getUserCart($userId);
+
+        if (empty($cartItems)) {
+            return redirect()->to('/cart')->with('error', 'Tu carrito está vacío.');
+        }
+
+        $productSizeModel = new ProductSizeModel();
+        $orderModel = new OrderModel();
+        $orderItemModel = new OrderItemModel();
+
+        $total = 0;
+
+        // Validar stock y calcular total
+        foreach ($cartItems as $item) {
+            $stockRecord = $productSizeModel
+                ->where('product_id', $item['product_id'])
+                ->where('size_id', $item['size_id'])
+                ->first();
+
+            if (!$stockRecord || $stockRecord->stock < $item['quantity']) {
+                return redirect()->to('/cart')->with('error', 'Stock insuficiente para ' . $item['name']);
+            }
+
+            $total += $item['quantity'] * $item['price'];
+        }
+
+        // Crear la orden
+        $orderId = $orderModel->insert([
+            'user_id' => $userId,
+            'total'   => $total,
+        ]);
+
+        // Registrar ítems y descontar stock
+        foreach ($cartItems as $item) {
+            // Descontar stock
+            $stockRecord = $productSizeModel
+                ->where('product_id', $item['product_id'])
+                ->where('size_id', $item['size_id'])
+                ->first();
+
+            $productSizeModel->update($stockRecord->id, [
+                'stock' => $stockRecord->stock - $item['quantity']
+            ]);
+
+            // Insertar ítem de orden
+            $orderItemModel->insert([
+                'order_id'   => $orderId,
+                'product_id' => $item['product_id'],
+                'size_id'    => $item['size_id'],
+                'quantity'   => $item['quantity'],
+                'price'      => $item['price'],
+            ]);
+        }
+
+        // Desactivar carrito
+        $this->cartModel
+            ->where('user_id', $userId)
+            ->where('active', 1)
+            ->set(['active' => 0])
+            ->update();
+
+        return redirect()->to('/cart')->with('success', '¡Compra realizada con éxito!');
     }
 }

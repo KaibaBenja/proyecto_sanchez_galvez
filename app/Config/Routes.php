@@ -31,7 +31,7 @@ $routes->group('cart', ['filter' => 'roleGuard:cliente'], function ($routes) {
     $routes->get('/', 'Cart::index');
     $routes->post('add', 'Cart::add');
     $routes->post('update', 'Cart::update');
-    $routes->get('remove/(:num)', 'Cart::remove/$1');
+    $routes->post('remove/(:num)', 'Cart::remove/$1');
+    $routes->post('checkout', 'Cart::checkout');
     $routes->get('clear', 'Cart::clear');
 });
-
