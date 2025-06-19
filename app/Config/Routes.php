@@ -19,7 +19,7 @@ $routes->post('/register', 'Auth::register');
 $routes->get('/logout', 'Auth::logout');
 $routes->get('/productos', 'Products::showProducts');
 $routes->get('/producto/(:num)', 'Products::show/$1');
-$routes->group('dashboard',  function ($routes) {
+$routes->group('dashboard',['filter' => 'roleGuard'],  function ($routes) {
     $routes->get('products', 'Products::index');
     $routes->get('products/create', 'Products::create');
     $routes->post('products/store', 'Products::store');
@@ -36,6 +36,7 @@ $routes->group('cart', ['filter' => 'roleGuard:cliente'], function ($routes) {
     $routes->get('clear', 'Cart::clear');
 });
 $routes->get('/orders', 'Orders::index', ['filter' => 'roleGuard:cliente']);
+$routes->get('/orders/all', 'Orders::all', ['filter' => 'roleGuard']);
 $routes->set404Override(function(){
     return view('/errors/html/error_404.php');
 });

@@ -22,16 +22,16 @@ Carrito de Compras
                 </thead>
                 <tbody>
                     <?php foreach ($cartItems as $item): ?>
-                        <tr>
-                            <td><?= esc($item['name']) ?></td>
-                            <td>$<?= esc($item['price']) ?></td>
-                            <td><?= esc($item['quantity']) ?></td>
-                            <td>$<?= esc($item['price'] * $item['quantity']) ?></td>
-                            <td class="cart-actions">
+                        <tr class="cart-item-row">
+                            <td data-label="Producto"><?= esc($item['name']) ?></td>
+                            <td data-label="Precio">$<?= esc($item['price']) ?></td>
+                            <td data-label="Cantidad"><?= esc($item['quantity']) ?></td>
+                            <td data-label="Total">$<?= esc($item['price'] * $item['quantity']) ?></td>
+                            <td data-label="Acciones" class="cart-actions">
                                 <form method="post" action="<?= base_url('/cart/remove/' . $item['id']) ?>">
                                     <button type="submit" class="remove-btn">Eliminar</button>
                                 </form>
-                                <form action="<?= base_url('/cart/checkout') ?>" method="post" style="margin-top: 20px; text-align: right;">
+                                <form action="<?= base_url('/cart/checkout') ?>" method="post" class="checkout-form">
                                     <button type="submit" class="checkout-btn">Finalizar compra</button>
                                 </form>
                             </td>

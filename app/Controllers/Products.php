@@ -169,7 +169,8 @@ class Products extends BaseController
         ]);
     }
 
-    public function showProducts(){
+    public function showProducts()
+    {
 
         $productModel     = new \App\Models\ProductModel();
         $brandModel       = new \App\Models\BrandModel();
@@ -185,7 +186,7 @@ class Products extends BaseController
 
         if (!empty($sizeId)) {
             $builder->join('product_sizes', 'product_sizes.product_id = products.id')
-                    ->where('product_sizes.size_id', $sizeId);
+                ->where('product_sizes.size_id', $sizeId);
         }
 
         if (!empty($brandId)) {
@@ -219,35 +220,140 @@ class Products extends BaseController
     }
 
 
-public function show($id){
-    $productModel     = new \App\Models\ProductModel();
-    $brandModel       = new \App\Models\BrandModel();
-    $sizeModel        = new \App\Models\SizeModel();
-    $productSizeModel = new \App\Models\ProductSizeModel();
+    public function show($id)
+    {
+        $productModel     = new \App\Models\ProductModel();
+        $brandModel       = new \App\Models\BrandModel();
+        $sizeModel        = new \App\Models\SizeModel();
+        $productSizeModel = new \App\Models\ProductSizeModel();
 
-    $product = $productModel
-        ->select('products.*, brands.name AS brand_name, categories.name AS category_name')
-        ->join('brands', 'brands.id = products.brand_id', 'left')
-        ->join('categories', 'categories.id = products.category_id', 'left')
-        ->where('products.id', $id)
-        ->get()
-        ->getFirstRow('array');
+        $product = $productModel
+            ->select('products.*, brands.name AS brand_name, categories.name AS category_name')
+            ->join('brands', 'brands.id = products.brand_id', 'left')
+            ->join('categories', 'categories.id = products.category_id', 'left')
+            ->where('products.id', $id)
+            ->get()
+            ->getFirstRow('array');
 
-    if (!$product) {
-        throw new \CodeIgniter\Exceptions\PageNotFoundException('Producto no encontrado');
+        if (!$product) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Producto no encontrado');
+        }
+
+        // Talles disponibles
+        $sizes = $productSizeModel
+            ->select('sizes.id as size_id, sizes.size_label, product_sizes.stock')
+            ->join('sizes', 'sizes.id = product_sizes.size_id')
+            ->where('product_sizes.product_id', $id)
+            ->findAll();
+
+        return view('products/product', [
+            'product' => $product,
+            'sizes'   => $sizes,
+        ]);
     }
 
-    // Talles disponibles
-    $sizes = $productSizeModel
-        ->select('sizes.id as size_id, sizes.size_label, product_sizes.stock')
-        ->join('sizes', 'sizes.id = product_sizes.size_id')
-        ->where('product_sizes.product_id', $id)
-        ->findAll();
+    public function edit($id)
+    {
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+            return redirect()->to('/login')->with('error', 'Acceso no autorizado');
+        }
 
-    return view('products/product', [
-        'product' => $product,
-        'sizes'   => $sizes,
-    ]);
-}
+        $productModel     = new ProductModel();
+        $brandModel       = new BrandModel();
+        $categoryModel    = new CategoryModel();
+        $sizeModel        = new SizeModel();
+        $productSizeModel = new ProductSizeModel();
 
+        $product = $productModel->find($id);
+        if (!$product) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Producto no encontrado');
+        }
+
+        $sizes = $productSizeModel
+            ->select('product_sizes.id, product_sizes.size_id, product_sizes.stock, sizes.size_label')
+            ->join('sizes', 'sizes.id = product_sizes.size_id')
+            ->where('product_id', $id)
+            ->findAll();
+
+        return view('dashboard/products/edit', [
+            'product'    => $product,
+            'brands'     => $brandModel->findAll(),
+            'categories' => $categoryModel->findAll(),
+            'sizes'      => $sizeModel->findAll(),
+            'productSizes' => $sizes
+        ]);
+    }
+
+    public function update($id)
+    {
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+            return redirect()->to('/login')->with('error', 'Acceso no autorizado');
+        }
+
+        $productModel     = new ProductModel();
+        $productSizeModel = new ProductSizeModel();
+        $sizeModel        = new SizeModel();
+
+        $request = $this->request->getPost();
+
+        $imageFile = $this->request->getFile('image');
+        if ($imageFile && $imageFile->isValid() && !$imageFile->hasMoved()) {
+            $imageName = $imageFile->getRandomName();
+            $imageFile->move(ROOTPATH . 'public/uploads/', $imageName);
+            $request['image_url'] = $imageName;
+        }
+
+        $productModel->update($id, [
+            'name'        => $request['name'],
+            'price'       => $request['price'],
+            'description' => $request['description'],
+            'brand_id'    => $request['brand_id'],
+            'category_id' => $request['category_id'],
+            'image_url'   => $request['image_url'] ?? null,
+        ]);
+
+        $sizes  = $request['sizes'] ?? [];
+        $stocks = $request['stocks'] ?? [];
+
+        if ($sizes && $stocks && count($sizes) === count($stocks)) {
+            foreach ($sizes as $index => $sizeId) {
+                $stock = $stocks[$index];
+
+                $existing = $productSizeModel
+                    ->where('product_id', $id)
+                    ->where('size_id', $sizeId)
+                    ->first();
+
+                if ($existing) {
+                    $productSizeModel->update($existing->id, [
+                        'stock' => $stock
+                    ]);
+                } else {
+                    $productSizeModel->insert([
+                        'product_id' => $id,
+                        'size_id'    => $sizeId,
+                        'stock'      => $stock,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->to('/dashboard/products')->with('success', 'Producto actualizado correctamente');
+    }
+
+    public function delete($id)
+    {
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+            return redirect()->to('/login')->with('error', 'Acceso no autorizado');
+        }
+
+        $productModel     = new ProductModel();
+        $productSizeModel = new ProductSizeModel();
+
+        $productSizeModel->where('product_id', $id)->delete();
+
+        $productModel->delete($id);
+
+        return redirect()->to('/dashboard/products')->with('success', 'Producto eliminado correctamente');
+    }
 }
