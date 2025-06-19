@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/auth.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/products.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/cart.css') ?>">
-
+    <link rel="stylesheet" href="<?= base_url('assets/css/edit-form.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/dashboard.css') ?>">
     <title><?= $this->renderSection('title') ?></title>
 </head>
 

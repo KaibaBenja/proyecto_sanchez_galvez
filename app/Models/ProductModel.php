@@ -18,5 +18,5 @@ class ProductModel extends Model
         'created_at',
         'updated_at',
     ];
-    protected $returnType = true;
+    protected $returnType = 'array';
 }

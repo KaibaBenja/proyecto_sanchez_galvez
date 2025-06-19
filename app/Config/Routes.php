@@ -25,7 +25,7 @@ $routes->group('dashboard',['filter' => 'roleGuard'],  function ($routes) {
     $routes->post('products/store', 'Products::store');
     $routes->get('products/edit/(:num)', 'Products::edit/$1');
     $routes->post('products/update/(:num)', 'Products::update/$1');
-    $routes->get('products/delete/(:num)', 'Products::delete/$1');
+    $routes->post('products/delete/(:num)', 'Products::delete/$1');
 });
 $routes->group('cart', ['filter' => 'roleGuard:cliente'], function ($routes) {
     $routes->get('/', 'Cart::index');

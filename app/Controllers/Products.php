@@ -252,9 +252,9 @@ class Products extends BaseController
         ]);
     }
 
-    public function edit($id)
-    {
-        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+    public function edit($id){
+        $userRole = session()->get('user_role');
+        if ($userRole !== 'admin' && $userRole !== 'vendedor') {
             return redirect()->to('/login')->with('error', 'Acceso no autorizado');
         }
 
@@ -284,9 +284,9 @@ class Products extends BaseController
         ]);
     }
 
-    public function update($id)
-    {
-        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+    public function update($id){
+        $userRole = session()->get('user_role');
+        if ($userRole !== 'admin' && $userRole !== 'vendedor') {
             return redirect()->to('/login')->with('error', 'Acceso no autorizado');
         }
 
@@ -296,6 +296,7 @@ class Products extends BaseController
 
         $request = $this->request->getPost();
 
+        // Actualizar imagen si se subió
         $imageFile = $this->request->getFile('image');
         if ($imageFile && $imageFile->isValid() && !$imageFile->hasMoved()) {
             $imageName = $imageFile->getRandomName();
@@ -303,6 +304,7 @@ class Products extends BaseController
             $request['image_url'] = $imageName;
         }
 
+        // Actualizar datos del producto
         $productModel->update($id, [
             'name'        => $request['name'],
             'price'       => $request['price'],
@@ -312,6 +314,7 @@ class Products extends BaseController
             'image_url'   => $request['image_url'] ?? null,
         ]);
 
+        // Actualizar talles y stock
         $sizes  = $request['sizes'] ?? [];
         $stocks = $request['stocks'] ?? [];
 
@@ -339,21 +342,24 @@ class Products extends BaseController
         }
 
         return redirect()->to('/dashboard/products')->with('success', 'Producto actualizado correctamente');
-    }
+}
 
-    public function delete($id)
-    {
-        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'vendedor'])) {
+public function delete($id){
+        $userRole = session()->get('user_role');
+        if ($userRole !== 'admin' && $userRole !== 'vendedor') {
             return redirect()->to('/login')->with('error', 'Acceso no autorizado');
         }
 
         $productModel     = new ProductModel();
         $productSizeModel = new ProductSizeModel();
 
+        // Borrar talles asociados
         $productSizeModel->where('product_id', $id)->delete();
 
+        // Borrar el producto
         $productModel->delete($id);
 
         return redirect()->to('/dashboard/products')->with('success', 'Producto eliminado correctamente');
     }
+
 }

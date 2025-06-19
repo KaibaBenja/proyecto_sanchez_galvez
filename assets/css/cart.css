@@ -101,13 +101,12 @@
   display: none;
 }
 
-
 @media (max-width: 768px) {
   .cart-title {
     font-size: 2.5em;
   }
 
-  .cart-item-row td{
+  .cart-item-row td {
     display: flex;
     text-align: center;
     text-wrap: wrap;
@@ -168,7 +167,7 @@
     font-size: 0.9em;
   }
 
- .cart-table thead {
+  .cart-table thead {
     display: none;
   }
 

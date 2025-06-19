@@ -1,0 +1,122 @@
+.form-section {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+  background-color: #f8f8f8;
+}
+
+.form-container {
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #232442;
+  text-align: center;
+  font-family: "Karla", sans-serif;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  font-family: "Karla", sans-serif;
+  color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: "Karla", sans-serif;
+  font-size: 1em;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #5c6bc0;
+  outline: none;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.edit-btn {
+  display: inline-block;
+  color: #fff;
+  font-family: "Karla", sans-serif;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #232442;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.edit-btn:hover {
+  background-color: #40426b;
+}
+
+.alert-danger {
+  background-color: #ffdddd;
+  color: #a94442;
+  padding: 12px;
+  border: 1px solid #e0b4b4;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: "Karla", sans-serif;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  .form-container h1 {
+    font-size: 1.8em;
+  }
+
+  .form-group input[type="number"],
+  .form-group input[type="text"],
+  .form-group textarea,
+  .form-group select {
+    font-size: 0.95em;
+  }
+}
+
+.form-group div[style*="margin-bottom"] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f3f3;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: "Karla", sans-serif;
+}
+
+.form-group div[style*="margin-bottom"] label {
+  margin: 0;
+}

@@ -1,0 +1,77 @@
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 20px;
+  background-color: #f8f8f8;
+}
+
+.dashboard-title {
+  font-family: "League Gothic", sans-serif;
+  font-size: 3em;
+  text-align: center;
+  color: #232442;
+  margin-bottom: 30px;
+}
+
+.alert.success-alert {
+  background: #e0f7e9;
+  color: #2d6a4f;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dashboard-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.primary-btn {
+  background: #232442;
+  color: white;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: #3a3a5a;
+}
+
+.secondary-btn {
+  background: white;
+  color: #232442;
+  border: 2px solid #232442;
+}
+
+.secondary-btn:hover {
+  background: #232442;
+  color: white;
+}
+
+.dashboard-section {
+  margin-top: 40px;
+}
+
+.section-title {
+  font-family: "League Gothic", sans-serif;
+  font-size: 2em;
+  color: #232442;
+  margin-bottom: 20px;
+  text-align: center;
+}
