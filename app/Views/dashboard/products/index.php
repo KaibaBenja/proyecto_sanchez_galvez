@@ -15,7 +15,7 @@ Dashboard
   <?php endif; ?>
 
   <div class="dashboard-actions">
-    <a href="<?= site_url('products/create') ?>" class="btn primary-btn">Crear Producto</a>
+    <a href="<?= site_url('dashboard/products/create') ?>" class="btn primary-btn">Crear Producto</a>
     <a href="<?= site_url('productos') ?>" class="btn secondary-btn">Ver Productos</a>
   </div>
 
@@ -28,8 +28,8 @@ Dashboard
           <img src="<?= base_url('public/uploads/' . esc($product['image_url'])) ?>" alt="<?= esc($product['name']) ?>">
           <h3><?= esc($product['name']) ?></h3>
           <p><?= esc($product['price']) ?></p>
-          <a href="<?= site_url('products/edit/' . $product['id']) ?>" class="btn secondary-btn">Editar</a>
-          <form action="<?= site_url('products/delete/' . $product['id']) ?>" method="post" style="display:inline;">
+          <a href="<?= site_url('dashboard/products/edit/' . $product['id']) ?>" class="btn secondary-btn">Editar</a>
+          <form action="<?= site_url('dashboard/products/delete/' . $product['id']) ?>" method="post" style="display:inline;">
             <?= csrf_field() ?>
             <button type="submit" class="btn primary-btn" onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</button>
           </form>

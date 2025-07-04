@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2025 a las 22:20:34
+-- Tiempo de generación: 03-07-2025 a las 23:04:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,7 +69,9 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `size_id`, `quantity`, `activ
 (1, 5, 1, 1, 1, 0, '2025-06-18 17:11:04', '2025-06-18 17:46:40'),
 (2, 5, 1, 2, 2, 0, '2025-06-18 17:47:06', '2025-06-18 17:52:18'),
 (3, 5, 1, 4, 1, 0, '2025-06-18 17:52:24', '2025-06-18 17:55:58'),
-(4, 5, 1, 3, 1, 0, '2025-06-18 17:57:25', '2025-06-18 18:46:10');
+(4, 5, 1, 3, 1, 0, '2025-06-18 17:57:25', '2025-06-18 18:46:10'),
+(5, 7, 3, 1, 1, 0, '2025-06-19 22:05:15', '2025-06-19 22:05:49'),
+(6, 7, 1, 3, 1, 1, '2025-06-19 22:06:25', '2025-06-19 22:06:25');
 
 -- --------------------------------------------------------
 
@@ -95,6 +97,21 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `consultas`
+--
+
+CREATE TABLE `consultas` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `email` int(150) NOT NULL,
+  `tel` int(20) NOT NULL,
+  `mensaje` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `orders`
 --
 
@@ -113,7 +130,8 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `status`, `total_price`, `created_at`, `updated_at`) VALUES
 (9, 5, 'pending', 198000.00, '2025-06-18 18:02:07.000000', '2025-06-18 18:02:07'),
-(10, 5, 'pending', 198000.00, '2025-06-18 18:03:56.000000', '2025-06-18 18:03:56');
+(10, 5, 'pending', 198000.00, '2025-06-18 18:03:56.000000', '2025-06-18 18:03:56'),
+(11, 7, 'pending', 230000.00, '2025-06-19 22:05:49.000000', '2025-06-19 22:05:49');
 
 -- --------------------------------------------------------
 
@@ -136,7 +154,8 @@ CREATE TABLE `order_items` (
 
 INSERT INTO `order_items` (`id`, `order_id`, `price_at_purchase`, `product_id`, `size_id`, `quantity`) VALUES
 (1, 9, 198000.00, 1, 3, 1),
-(2, 10, 198000.00, 1, 3, 1);
+(2, 10, 198000.00, 1, 3, 1),
+(3, 11, 230000.00, 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -168,7 +187,8 @@ INSERT INTO `products` (`id`, `name`, `brand_id`, `category_id`, `price`, `descr
 (6, 'Puma Caven 2.0 Lux', 5, 1, 119999.00, 'Las Zapatillas Puma Caven 2.0 Lux fusionan el estilo retro del básquet de los 80 con detalles modernos. Confeccionadas en cuero premium y una entresuela apilada, ofrecen comodidad y un look urbano versátil para el día a día.', '1750274530_a02fc5979f685a97db44.jpg', '2025-06-18 16:22:10.662482'),
 (7, 'Converse Chuck Taylor Core Hi', 6, 1, 89899.00, '', '1750274650_2dc9bee0cd2f4642a582.jpg', '2025-06-18 16:24:10.690993'),
 (8, 'Nike Legend Essential 3 Next Nature Hombre', 1, 4, 119999.00, 'Zapatillas Entrenamiento Nike Legend Essential 3 Next Nature Hombre están diseñadas con una estructura ligera y duradera. Están fabricadas con materiales reciclados, lo que las convierte en una opción más sostenible sin comprometer el rendimiento. La suela ofrece una excelente tracción, mientras que la parte superior de malla proporciona ventilación para mantener los pies frescos durante los entrenamientos más exigentes.', '1750274816_f92f17dda1eebb40b78f.jpg', '2025-06-18 16:26:56.972483'),
-(13, 'Adidas Dropset 3', 1, 4, 189999.00, 'Ya sea levantando, empujando o tirando, las Zapatillas adidas Dropset 3 proporcionan el soporte estable necesario para el entrenamiento de fuerza. Una entresuela de doble densidad mantiene los pies amortiguados durante las repeticiones intensas, mientras que la pared lateral de TPU bloquea la parte media del pie. adidas HEAT. RDY mantiene los pies frescos incluso cuando el entrenamiento se calienta. Más anchas que el ajuste estándar, estas zapatillas contienen cómodamente cualquier hinchazón del pie por el esfuerzo.', '1750362970_fb815361f69fb88ba0ec.jpg', '2025-06-18 16:43:51.579915');
+(13, 'Adidas Dropset 3', 1, 4, 189999.00, 'Ya sea levantando, empujando o tirando, las Zapatillas adidas Dropset 3 proporcionan el soporte estable necesario para el entrenamiento de fuerza. Una entresuela de doble densidad mantiene los pies amortiguados durante las repeticiones intensas, mientras que la pared lateral de TPU bloquea la parte media del pie. adidas HEAT. RDY mantiene los pies frescos incluso cuando el entrenamiento se calienta. Más anchas que el ajuste estándar, estas zapatillas contienen cómodamente cualquier hinchazón del pie por el esfuerzo.', '1750362970_fb815361f69fb88ba0ec.jpg', '2025-06-18 16:43:51.579915'),
+(15, 'Adidas Dropset 3', 2, 2, 189999.00, 'c', '1750365292_ee9203b00ef88c56aed1.webp', '2025-06-19 17:34:52.524946');
 
 -- --------------------------------------------------------
 
@@ -196,7 +216,7 @@ INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`, `stock`) VALUES
 (6, 2, 2, 2),
 (7, 2, 4, 1),
 (8, 2, 3, 2),
-(9, 3, 1, 3),
+(9, 3, 1, 2),
 (10, 3, 3, 4),
 (11, 3, 4, 5),
 (12, 3, 5, 3),
@@ -229,7 +249,8 @@ INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`, `stock`) VALUES
 (40, 13, 3, 1),
 (41, 13, 4, 0),
 (42, 1, 5, 0),
-(43, 1, 6, 0);
+(43, 1, 6, 0),
+(44, 15, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -305,6 +326,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `consultas`
+--
+ALTER TABLE `consultas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `orders`
 --
 ALTER TABLE `orders`
@@ -361,7 +388,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -370,28 +397,34 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `consultas`
+--
+ALTER TABLE `consultas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `product_sizes`
 --
 ALTER TABLE `product_sizes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `sizes`

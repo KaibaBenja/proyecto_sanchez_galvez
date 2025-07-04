@@ -177,12 +177,18 @@ class Products extends BaseController
         $sizeModel        = new \App\Models\SizeModel();
         $productSizeModel = new \App\Models\ProductSizeModel();
 
-        $brandId = $this->request->getGet('brand');
-        $sizeId  = $this->request->getGet('size');
+        $search    = $this->request->getGet('search');
+        $brandId   = $this->request->getGet('brand');
+        $sizeId    = $this->request->getGet('size');
 
         $builder = $productModel
             ->select('products.*, brands.name as brand_name')
             ->join('brands', 'brands.id = products.brand_id', 'left');
+
+        // Agregar búsqueda por nombre del producto
+        if (!empty($search)) {
+            $builder->like('products.name', $search);
+        }
 
         if (!empty($sizeId)) {
             $builder->join('product_sizes', 'product_sizes.product_id = products.id')
@@ -216,6 +222,7 @@ class Products extends BaseController
             'sizes' => $sizes,
             'selectedBrand' => $brandId,
             'selectedSize' => $sizeId,
+            'search' => $search,
         ]);
     }
 

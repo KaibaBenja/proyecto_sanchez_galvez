@@ -14,18 +14,17 @@
             <?php if (session()->get('user_role') === 'cliente' || session()->get('user_role') === 'vendedor'): ?>
                 <li><a href="<?= site_url('orders') ?>">Historial de compras</a></li>
             <?php endif; ?>
-            <?php if (session()->get('user_role') === 'admin' || session()->get('user_role') === 'vendedor'): ?>
-                <li><a href="<?= site_url('orders/all') ?>">Ver todas las compras</a></li>
-            <?php endif; ?>
+
             <?php if (session()->get('user_role') === 'cliente' || session()->get('user_role') === 'vendedor'): ?>
                 <li><a href="<?= site_url('cart') ?>"><i class="fas fa-shopping-cart"></i></a></li>
             <?php endif; ?>
             <?php if (session()->get('logged_in')): ?>
                 <?php if (session()->get('user_role') === 'admin'): ?>
-                    <li><a href="<?= site_url('dashboard/products') ?>">Dashboard</a></li>
+                    <li><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
                 <?php endif; ?>
                 <li class="user-info">
                     <i class="fas fa-user"></i> |
+                    <a href="<?= site_url('/profile') ?>">Mi perfil</a> |
                     <a href="<?= site_url('/logout') ?>">Cerrar sesión</a>
                 </li>
             <?php else: ?>
@@ -54,17 +53,16 @@
                 <?php if (session()->get('user_role') === 'cliente' || session()->get('user_role') === 'vendedor'): ?>
                     <li><a href="<?= site_url('orders') ?>">Historial de compras</a></li>
                 <?php endif; ?>
-                <?php if (session()->get('user_role') === 'admin' || session()->get('user_role') === 'vendedor'): ?>
-                    <li><a href="<?= site_url('dashboard/orders/all') ?>">Ver todas las compras</a></li>
-                <?php endif; ?>
+
                 <li><a href="<?= site_url('cart') ?>"><i class="fas fa-shopping-cart"></i>| Carrito</a></li>
 
                 <?php if (session()->get('logged_in')): ?>
                     <?php if (session()->get('user_role') === 'admin'): ?>
-                        <li><a href="<?= site_url('dashboard/products') ?>">Dashboard</a></li>
+                        <li><a href="<?= site_url('dashboard') ?>">Dashboard</a></li>
                     <?php endif; ?>
                     <li class="user-info">
                         <i class="fas fa-user"></i> |
+                        <a href="<?= site_url('/profile') ?>">Mi perfil</a> |
                         <a href="<?= site_url('/logout') ?>">Cerrar sesión</a>
                     </li>
                 <?php else: ?>
