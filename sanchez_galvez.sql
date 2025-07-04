@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-07-2025 a las 23:04:55
+-- Tiempo de generación: 04-07-2025 a las 02:47:28
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -71,7 +71,9 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `size_id`, `quantity`, `activ
 (3, 5, 1, 4, 1, 0, '2025-06-18 17:52:24', '2025-06-18 17:55:58'),
 (4, 5, 1, 3, 1, 0, '2025-06-18 17:57:25', '2025-06-18 18:46:10'),
 (5, 7, 3, 1, 1, 0, '2025-06-19 22:05:15', '2025-06-19 22:05:49'),
-(6, 7, 1, 3, 1, 1, '2025-06-19 22:06:25', '2025-06-19 22:06:25');
+(6, 7, 1, 3, 1, 1, '2025-06-19 22:06:25', '2025-06-19 22:06:25'),
+(7, 12, 3, 2, 4, 0, '2025-07-04 00:15:53', '2025-07-04 00:16:31'),
+(8, 12, 1, 4, 1, 0, '2025-07-04 00:16:20', '2025-07-04 00:16:31');
 
 -- --------------------------------------------------------
 
@@ -103,11 +105,22 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 CREATE TABLE `consultas` (
   `id` int(11) NOT NULL,
   `nombre` varchar(150) NOT NULL,
-  `email` int(150) NOT NULL,
-  `tel` int(20) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `tel` varchar(20) NOT NULL,
   `mensaje` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `consultas`
+--
+
+INSERT INTO `consultas` (`id`, `nombre`, `email`, `tel`, `mensaje`, `created_at`, `updated_at`) VALUES
+(6, 'Mateo Gálvez Diaz Colodrero', 'mattegdc@gmail.com', '3795738241', 'Hola, existe la posibilidad de que hagan envíos a tierra del fuego?', '2025-07-03 21:28:51', '2025-07-03 21:28:51'),
+(7, 'Facundo Ruben Boutron Angeloff', 'facundo_rba@gmail.com', '03794583434', 'Hola, tuve un error con mi compra, no aceptaron mi tarjeta', '2025-07-03 21:31:25', '2025-07-03 21:31:25'),
+(8, 'Joaquin Armand', 'joa1299wnm@gmail.com', '3794782734', 'Buenas, quisiera saber cuando entran mas talle 45, por favor', '2025-07-03 21:34:23', '2025-07-03 21:34:23'),
+(9, 'Leandro Martinez', 'leancrack212@gmail.com', '3794768790', 'Buenas, quiero saber si esta semana entran botines?', '2025-07-03 21:38:08', '2025-07-03 21:38:08');
 
 -- --------------------------------------------------------
 
@@ -131,7 +144,8 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`id`, `user_id`, `status`, `total_price`, `created_at`, `updated_at`) VALUES
 (9, 5, 'pending', 198000.00, '2025-06-18 18:02:07.000000', '2025-06-18 18:02:07'),
 (10, 5, 'pending', 198000.00, '2025-06-18 18:03:56.000000', '2025-06-18 18:03:56'),
-(11, 7, 'pending', 230000.00, '2025-06-19 22:05:49.000000', '2025-06-19 22:05:49');
+(11, 7, 'pending', 230000.00, '2025-06-19 22:05:49.000000', '2025-06-19 22:05:49'),
+(12, 12, 'pending', 1118000.00, '2025-07-04 00:16:31.000000', '2025-07-04 00:16:31');
 
 -- --------------------------------------------------------
 
@@ -155,7 +169,9 @@ CREATE TABLE `order_items` (
 INSERT INTO `order_items` (`id`, `order_id`, `price_at_purchase`, `product_id`, `size_id`, `quantity`) VALUES
 (1, 9, 198000.00, 1, 3, 1),
 (2, 10, 198000.00, 1, 3, 1),
-(3, 11, 230000.00, 3, 1, 1);
+(3, 11, 230000.00, 3, 1, 1),
+(4, 12, 198000.00, 1, 4, 1),
+(5, 12, 230000.00, 3, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -211,7 +227,7 @@ INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`, `stock`) VALUES
 (1, 1, 1, 0),
 (2, 1, 2, 0),
 (3, 1, 3, 2),
-(4, 1, 4, 2),
+(4, 1, 4, 1),
 (5, 2, 1, 4),
 (6, 2, 2, 2),
 (7, 2, 4, 1),
@@ -220,7 +236,7 @@ INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`, `stock`) VALUES
 (10, 3, 3, 4),
 (11, 3, 4, 5),
 (12, 3, 5, 3),
-(13, 3, 2, 7),
+(13, 3, 2, 3),
 (14, 4, 1, 7),
 (15, 4, 5, 4),
 (16, 4, 3, 7),
@@ -298,7 +314,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`, `role`) VALUES
 (5, 'Facundo Ruben Boutron Angeloff', 'martinbosch1996@gmail.com', '$2y$10$O8kGfSqaXPyuhHPHezwaW.4tlOsywNVkqmkZBZ4HltL1GVDtdkbpC', '2025-06-17 12:02:13', '2025-06-17 12:02:13', 'cliente'),
 (6, 'Admin Sanchez', 'admin@sneakers.com', '$2y$10$qJO8lsib0NOP0VYhU4TxIeqNN1UVdfYW/xflAl6tJu2DsYXmpSavG', '2025-06-17 12:05:06', '2025-06-17 12:05:06', 'admin'),
-(7, 'Juan Perez', 'juanperez@gmail.com', '$2y$10$kKZSX3Eqs3VO0yFm67zRs./IKCx9dl0DrQmovPusrgevRwJANPyWa', '2025-06-19 20:19:08', '2025-06-19 20:19:08', 'cliente');
+(7, 'Juan Perez', 'juanperez@gmail.com', '$2y$10$RJF/twsdYbt6k2lJX1Vfb.B0v5usGuvPtDwd0mbTHG3ZkRzWREHP2', '2025-06-19 20:19:08', '2025-07-03 23:31:17', 'cliente'),
+(12, 'Benjamin Delfor Sanchez Morales', 'sanchezmoralesbenjamin10@gmail.com', '$2y$10$9rldsH1t8wvraiTVO1rjKeu/SHNaRaqpd5qDYmlcjTHHMzUHvNs2y', '2025-07-04 00:02:17', '2025-07-04 00:02:17', 'cliente');
 
 --
 -- Índices para tablas volcadas
@@ -388,7 +405,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `categories`
@@ -400,19 +417,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de la tabla `consultas`
 --
 ALTER TABLE `consultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -436,7 +453,7 @@ ALTER TABLE `sizes`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
