@@ -20,9 +20,9 @@ class Orders extends BaseController
         $dateTo = $this->request->getGet('date_to');
         $sortBy = $this->request->getGet('sort_by') ?? 'created_at';
         $sortOrder = $this->request->getGet('sort_order') ?? 'DESC';
-        
+
         $sortOrder = strtoupper($sortOrder) === 'ASC' ? 'ASC' : 'DESC';
-        
+
         $allowedSortFields = ['created_at', 'total_price', 'id'];
         $sortBy = in_array($sortBy, $allowedSortFields) ? $sortBy : 'created_at';
 
@@ -46,17 +46,17 @@ class Orders extends BaseController
 
         if (!empty($search)) {
             $productSearch = $db->table('order_items')
-                ->select('DISTINCT order_id')
+                ->select('order_id')
                 ->join('products', 'products.id = order_items.product_id')
                 ->where('order_items.order_id IN (SELECT id FROM orders WHERE user_id = ' . $userId . ')')
                 ->like('products.name', $search)
                 ->get()
                 ->getResultArray();
-            
+
             $productOrderIds = array_column($productSearch, 'order_id');
-            
+
             if (!empty($productOrderIds)) {
-                $orders = array_filter($orders, function($order) use ($productOrderIds) {
+                $orders = array_filter($orders, function ($order) use ($productOrderIds) {
                     return in_array($order['id'], $productOrderIds);
                 });
             }
@@ -99,9 +99,9 @@ class Orders extends BaseController
         $dateTo = $this->request->getGet('date_to');
         $sortBy = $this->request->getGet('sort_by') ?? 'created_at';
         $sortOrder = $this->request->getGet('sort_order') ?? 'DESC';
-        
+
         $sortOrder = strtoupper($sortOrder) === 'ASC' ? 'ASC' : 'DESC';
-        
+
         $allowedSortFields = ['created_at', 'total_price', 'id'];
         $sortBy = in_array($sortBy, $allowedSortFields) ? $sortBy : 'created_at';
 
@@ -130,16 +130,16 @@ class Orders extends BaseController
 
         if (!empty($search)) {
             $productSearch = $db->table('order_items')
-                ->select('DISTINCT order_id')
+                ->select(' order_id')
                 ->join('products', 'products.id = order_items.product_id')
                 ->like('products.name', $search)
                 ->get()
                 ->getResultArray();
-            
+
             $productOrderIds = array_column($productSearch, 'order_id');
-            
+
             if (!empty($productOrderIds)) {
-                $orders = array_filter($orders, function($order) use ($productOrderIds) {
+                $orders = array_filter($orders, function ($order) use ($productOrderIds) {
                     return in_array($order['id'], $productOrderIds);
                 });
             }
@@ -173,7 +173,7 @@ class Orders extends BaseController
     public function show($orderId)
     {
         $userId = session()->get('user_id');
-        
+
         if (!$userId) {
             return redirect()->to('/login')->with('error', 'Debes iniciar sesión para ver tus compras');
         }
